@@ -5,9 +5,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(APPPATH . DIRECTORY_SEPARATOR . '../');
-$dotenv->load();
-
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS

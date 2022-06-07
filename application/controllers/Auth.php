@@ -15,7 +15,7 @@ class Auth extends CI_Controller
         $login_salah = '';
         $login_with = User::LOGIN_WITH;
 
-        if ($this->session->has_userdata($login_with)) {
+        if ($this->session->has_userdata('user')) {
             redirect('dashboard');
         }
 

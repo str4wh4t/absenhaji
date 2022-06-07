@@ -12,10 +12,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$hook['post_controller_constructor'][] = [
+$hook['post_controller_constructor'] = [
     'class' => 'Auth',
     'function' => 'verify',
     'filename' => 'Auth.php',
     'filepath' => 'hooks',
     'params' => []
 ];
+
+// $hook['pre_system'] = function() {
+//     $dotenv = \Dotenv\Dotenv::createImmutable(APPPATH . DIRECTORY_SEPARATOR . '../');
+//     $dotenv->load();
+// };

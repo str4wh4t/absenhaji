@@ -12,8 +12,8 @@ return [
     'environments' => [
         'local' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
-            'port' => 3306, // optional
+            'host' => $_ENV['DB_HOST'],
+            'port' => $_ENV['DB_PORT'], // optional
             'username' => $_ENV['DB_USERNAME'],
             'password' => $_ENV['DB_PASSWORD'],
             'db_name' => $_ENV['DB_NAME'],

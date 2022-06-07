@@ -25,7 +25,7 @@ date_default_timezone_set('Asia/Jakarta');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8000/';
+$config['base_url'] = $_ENV['APP_URL'];
 
 /*
 |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = APPPATH . DIRECTORY_SEPARATOR . '../vendor/autoload.php';
+$config['composer_autoload'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -328,7 +328,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'm3q3n4K5ekal1';
+$config['encryption_key'] = $_ENV['APP_KEY'];
 
 /*
 |--------------------------------------------------------------------------
@@ -386,7 +386,7 @@ $config['encryption_key'] = 'm3q3n4K5ekal1';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'app_sess';
+$config['sess_cookie_name'] = $_ENV['APP_SESS'];
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = APPPATH . DIRECTORY_SEPARATOR . 'sessions';
