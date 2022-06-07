@@ -6,9 +6,6 @@
 /application/logs/*
 !application/logs/index.html
 
-/application/sessions/*
-!application/sessions/index.html
-
 !application/*/.htaccess
 
 composer.lock
