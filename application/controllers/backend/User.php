@@ -13,7 +13,7 @@ class User extends MY_Controller
     public function index()
     {
         if ($this->_is_role(Role::ROLE_ADMIN)) {
-            render('backend.user.index');
+            render('backend.User.index');
         } else {
             redirect('dashboard');
         }
@@ -84,7 +84,7 @@ class User extends MY_Controller
         $action = 'backend/user/tambah';
         $title = 'Tambah User';
 
-        render('backend.user.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
+        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
     }
 
     public function edit($id)
@@ -163,7 +163,7 @@ class User extends MY_Controller
         $action = 'backend/user/edit/' . $id;
         $title = 'Edit User';
 
-        render('backend.user.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
+        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
     }
 
     public function hapus()

@@ -12,7 +12,7 @@ class Absen extends MY_Controller
     public function index()
     {
         $this->_allow_role(Role::ROLE_ADMIN);
-        render('backend.absen.index');
+        render('backend.Absen.index');
     }
 
     public function tambah()
@@ -61,7 +61,7 @@ class Absen extends MY_Controller
 
         $qrcode = qrgenerate();
 
-        render('backend.absen.form', compact('notif_sukses','list_errors','input', 'action', 'qrcode'));
+        render('backend.Absen.form', compact('notif_sukses','list_errors','input', 'action', 'qrcode'));
     }
 
     public function generate()
@@ -92,7 +92,7 @@ class Absen extends MY_Controller
 
     public function scan()
     {
-        render('backend.absen.scan');
+        render('backend.Absen.scan');
     }
 
     public function doscan()
@@ -145,11 +145,11 @@ class Absen extends MY_Controller
 
         $qrcode = qrgenerate($absen->kode_absen);
 
-        render('backend.absen.lihat', compact('absen','qrcode'));
+        render('backend.Absen.lihat', compact('absen','qrcode'));
     }
 
     public function riwayat()
     {
-        render('backend.absen.riwayat');
+        render('backend.Absen.riwayat');
     }
 }

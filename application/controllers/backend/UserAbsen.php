@@ -32,6 +32,6 @@ class UserAbsen extends CI_Controller
 
         $qrcode = qrgenerate($user_absen->absen->kode_absen);
 
-        render('backend.userabsen.lihat', compact('user_absen','qrcode'));
+        render('backend.UserAbsen.lihat', compact('user_absen','qrcode'));
     }
 }
