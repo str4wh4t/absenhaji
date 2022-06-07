@@ -2,7 +2,7 @@
 @section('content')
 <br>
 <div class="row">
-  <div class="col-8 p-5 mb-4 bg-light rounded-3">
+  <div class="col-lg-8 p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
           <h1 class="display-5 fw-bold pb-3">Aplikasi Absensi Petugas Haji</h1>
           <p class="col-md-8 fs-4">Aplikasi untuk manajemen data absensi petugas haji di Indonesia, silahkan anda langsung dapat melakukan absensi dengan tombol dibawah</p>
@@ -10,7 +10,7 @@
         </div>
       </div>
 
-          <div class="col-4">
+          <div class="col-lg-4">
       <div class="card">
   <div class="card-header">
     Informasi
