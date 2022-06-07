@@ -75,7 +75,7 @@ class User extends CI_Controller
             }
         }
 
-        render('user.registration', compact('registration_sukses','list_errors','user_input'));
+        render('User.registration', compact('registration_sukses','list_errors','user_input'));
     }
 
     public function absensi()

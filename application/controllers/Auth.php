@@ -36,7 +36,7 @@ class Auth extends CI_Controller
             }
         }
 
-        render('auth.login', ['login_salah' => $login_salah, 'login_with' => $login_with]);
+        render('Auth.login', ['login_salah' => $login_salah, 'login_with' => $login_with]);
     }
 
     public function logout()
