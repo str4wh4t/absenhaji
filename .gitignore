@@ -25,5 +25,6 @@ composer.lock
 *.sublime-project
 /tests/tests/
 /tests/results/
+/public/node_modules/
 /writable/node_modules/
 .env
