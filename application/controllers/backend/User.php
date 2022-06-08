@@ -7,6 +7,7 @@ use Orm\Role;
 use Orm\Bidang;
 use Orm\Instansi;
 use Orm\Jabatan;
+use Orm\Jabatan_struktural;
 use Illuminate\Database\Capsule\Manager as DB;
 use Grahes\Validator\ValidatorFactory;
 use Illuminate\Validation\Rule;
@@ -106,6 +107,7 @@ class User extends MY_Controller
         $bidang = $this->table_refrensi(BIDANG);
         $instansi = $this->table_refrensi(INSTANSI);
         $jabatan = $this->table_refrensi(JABATAN);
+        $jabatan_struktural = $this->table_refrensi(JABATAN_STRUKTURAL);
 
         // print_r($bidang);
 
@@ -120,6 +122,7 @@ class User extends MY_Controller
             'bidang_id' => $user->bidang_id,
             'instansi_id' => $user->instansi_id,
             'jabatan_id' => $user->jabatan_id,
+            'struktural_id' => $user->struktural_id,
         ];
 
         if ($this->input->post()) {
@@ -149,6 +152,7 @@ class User extends MY_Controller
             $input['bidang_id'] = $this->input->post('bidang');
             $input['instansi_id'] = $this->input->post('instansi');
             $input['jabatan_id'] = $this->input->post('jabatan');
+            $input['struktural_id'] = $this->input->post('struktural');
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -163,6 +167,7 @@ class User extends MY_Controller
                     $user->bidang_id = $input['bidang_id'];
                     $user->instansi_id = $input['instansi_id'];
                     $user->jabatan_id = $input['jabatan_id'];
+                    $user->struktural_id = $input['struktural_id'];
                     $user->save();
 
                     DB::commit();
@@ -177,6 +182,7 @@ class User extends MY_Controller
                         'bidang_id' => $user->bidang_id,
                         'instansi_id' => $user->instansi_id,
                         'jabatan_id' => $user->jabatan_id,
+                        'struktural_id' => $user->struktural_id,
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
@@ -188,7 +194,17 @@ class User extends MY_Controller
         $action = 'backend/user/edit/' . $id;
         $title = 'Edit User';
 
-        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title', 'bidang', 'instansi', 'jabatan'));
+        render('backend.User.form', compact(
+                    'notif_sukses',
+                    'list_errors',
+                    'input', 
+                    'action', 
+                    'title', 
+                    'bidang', 
+                    'instansi', 
+                    'jabatan',
+                    'jabatan_struktural'
+                ));
     }
 
     public function hapus()
@@ -224,12 +240,17 @@ class User extends MY_Controller
                             "data" => Jabatan::all(),
                             "field" => "jabatanname"
                     ],
+                    JABATAN_STRUKTURAL =>[
+                            "data" => Jabatan_struktural::all(),
+                            "field" => "jabatanname"
+                    ],
                 ];
 
         $data   = $reff[$pilihan]['data'];
         $field  = $reff[$pilihan]['field'];
     
         $record = array(''=> '');
+        $record = array(0 => 'Tidak Tersedia');
         foreach($data as $r){
             $record[$r->id] = $r->$field;
         }
