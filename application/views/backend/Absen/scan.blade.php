@@ -113,9 +113,9 @@
 
 <!--<script src="../qr-scanner.umd.min.js"></script>-->
 <!--<script src="../qr-scanner.legacy.min.js"></script>-->
-<script type="text/javascript" src="{{ base_url('assets/node_modules') }}/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="{{ base_url('node_modules') }}/jquery/dist/jquery.min.js"></script>
 <script type="module">
-    import QrScanner from "{{ base_url('assets/node_modules/qr-scanner/qr-scanner.min.js') }}";
+    import QrScanner from "{{ base_url('node_modules/qr-scanner/qr-scanner.min.js') }}";
 
     const video = document.getElementById('qr-video');
     const videoContainer = document.getElementById('video-container');
