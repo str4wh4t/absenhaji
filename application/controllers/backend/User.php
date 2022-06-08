@@ -285,6 +285,7 @@ class User extends MY_Controller
 
         $record = ['' => ''];
         foreach ($data as $r) {
+            [
                     BIDANG =>[
                             "data" => Bidang::all(),
                             "field" => "bidangname"
@@ -301,7 +302,8 @@ class User extends MY_Controller
                             "data" => Jabatan_struktural::all(),
                             "field" => "jabatanname"
                     ],
-            }
+                ];
+        }
 
         $data   = $reff[$pilihan]['data'];
         $field  = $reff[$pilihan]['field'];
