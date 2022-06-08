@@ -89,7 +89,7 @@ $autoload['drivers'] = [];
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = ['url', 'blade', 'orm', 'qrcode'];
+$autoload['helper'] = ['url', 'blade', 'orm', 'qrcode', 'form'];
 
 /*
 | -------------------------------------------------------------------

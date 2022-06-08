@@ -4,9 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use Orm\User as UserOrm;
 use Orm\UserRole;
 use Orm\Role;
+use Orm\Bidang;
+use Orm\Instansi;
+use Orm\Jabatan;
 use Illuminate\Database\Capsule\Manager as DB;
 use Grahes\Validator\ValidatorFactory;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\Types\This;
 
 class User extends MY_Controller
 {
@@ -99,6 +103,12 @@ class User extends MY_Controller
             $id = $user->id;
         }
 
+        $bidang = $this->table_refrensi(BIDANG);
+        $instansi = $this->table_refrensi(INSTANSI);
+        $jabatan = $this->table_refrensi(JABATAN);
+
+        // print_r($bidang);
+
         $notif_sukses = '';
         $list_errors = [];
 
@@ -107,12 +117,18 @@ class User extends MY_Controller
             'username' => $user->username,
             'email' => $user->email,
             'password' => $user->password,
+            'bidang_id' => $user->bidang_id,
+            'instansi_id' => $user->instansi_id,
+            'jabatan_id' => $user->jabatan_id,
         ];
 
         if ($this->input->post()) {
             $validatorFactory = new ValidatorFactory;
             $validator = $validatorFactory->make($this->input->post(), [
                 'fullname' => 'required',
+                // 'bidang_id' => 'required',
+                // 'instansi_id' => 'required',
+                // 'jabatan_id' => 'required',
                 'username' => [
                     'required',
                     'alpha_dash',
@@ -130,6 +146,9 @@ class User extends MY_Controller
             $input['email'] = $this->input->post('email');
             $input['username'] = $this->input->post('username');
             $input['password'] = $this->input->post('password');
+            $input['bidang_id'] = $this->input->post('bidang');
+            $input['instansi_id'] = $this->input->post('instansi');
+            $input['jabatan_id'] = $this->input->post('jabatan');
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -141,6 +160,9 @@ class User extends MY_Controller
                     $user->email = $input['email'];
                     $user->username = $input['username'];
                     $user->password = $input['password'];
+                    $user->bidang_id = $input['bidang_id'];
+                    $user->instansi_id = $input['instansi_id'];
+                    $user->jabatan_id = $input['jabatan_id'];
                     $user->save();
 
                     DB::commit();
@@ -152,6 +174,9 @@ class User extends MY_Controller
                         'username' => $user->username,
                         'email' => $user->email,
                         'password' => $user->password,
+                        'bidang_id' => $user->bidang_id,
+                        'instansi_id' => $user->instansi_id,
+                        'jabatan_id' => $user->jabatan_id,
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
@@ -163,7 +188,7 @@ class User extends MY_Controller
         $action = 'backend/user/edit/' . $id;
         $title = 'Edit User';
 
-        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
+        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title', 'bidang', 'instansi', 'jabatan'));
     }
 
     public function hapus()
@@ -182,11 +207,33 @@ class User extends MY_Controller
     {
         $user = $this->session->user;
         $this->edit($user->id);
+    } 
+    
+    public function table_refrensi($pilihan)
+    {
+        $reff = [
+                    BIDANG =>[
+                            "data" => Bidang::all(),
+                            "field" => "bidangname"
+                    ],
+                    INSTANSI =>[
+                            "data" => Instansi::all(),
+                            "field" => "instansiname"
+                    ],
+                    JABATAN =>[
+                            "data" => Jabatan::all(),
+                            "field" => "jabatanname"
+                    ],
+                ];
+
+        $data   = $reff[$pilihan]['data'];
+        $field  = $reff[$pilihan]['field'];
+    
+        $record = array(''=> '');
+        foreach($data as $r){
+            $record[$r->id] = $r->$field;
+        }
+        return $record;
     }
 
-    public function profil()
-    {
-        $user = $this->session->user;
-        $this->profil($user->id);
-    }
 }

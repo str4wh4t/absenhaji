@@ -17,6 +17,7 @@
 <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css">
     <!-- Favicons -->
 <!-- <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -151,16 +152,11 @@
             </a>
           </li>
           @endif
-          <li class="nav-item">
-            <a class="nav-link" href="{{ site_url('backend/user/profil') }}">
-              <i class="bi bi-person"></i>
-              Profile Satgas
-            </a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/user/setting') }}">
-              <i class="bi-gear"></i>
-              Edit User
+              <i class="bi-person"></i>
+              Profile Satgas
             </a>
           </li>
         </ul>
@@ -181,6 +177,7 @@
     <script src="https://getbootstrap.com/docs/5.2/examples/dashboard/dashboard.js"></script>
     <script type="text/javascript" src="{{ base_url('node_modules') }}/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js"></script>
 
     <script src="{{ base_url('node_modules') }}/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
     <script src="{{ base_url('node_modules') }}/print-js/dist/print.js"></script>

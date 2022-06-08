@@ -27,9 +27,22 @@
     <input type="text" class="form-control" id="username" name="username" value="{{ $input['username'] }}">
   </div>
   <div class="mb-3">
+    <label for="bidang" class="form-label">Bidang</label>
+    <?= form_dropdown('bidang', @$bidang, @$input['bidang_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+  </div>
+  <div class="mb-3">
+    <label for="instansi" class="form-label">Instansi</label>
+    <?= form_dropdown('instansi', @$instansi, @$input['instansi_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+  </div>
+  <div class="mb-3">
+    <label for="jabatan" class="form-label">Jabatan</label>
+    <?= form_dropdown('jabatan', @$jabatan, @$input['jabatan_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+  </div>
+  <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input type="text" class="form-control" id="email" name="email" value="{{ $input['email'] }}">
   </div>
+  
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" id="password" name="password" value="{{ $input['password'] }}">
@@ -46,7 +59,9 @@
   });
 
   $(document).ready( function () {
-    
+    $('.chosen').chosen({
+        width: "100%"
+    });
   });
 </script>
 @endsection

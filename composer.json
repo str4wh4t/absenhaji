@@ -20,7 +20,8 @@
 		"ozdemir/datatables": "^2.3",
 		"endroid/qr-code": "^4.4",
 		"nesbot/carbon": "^2.58",
-		"sendinblue/api-v3-sdk": "^8.2"
+		"sendinblue/api-v3-sdk": "^8.2",
+		"harvesthq/chosen": "^1.8"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
