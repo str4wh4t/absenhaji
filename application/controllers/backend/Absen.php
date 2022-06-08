@@ -6,6 +6,7 @@ use Grahes\Validator\ValidatorFactory;
 use Orm\Absen AS AbsenOrm;
 use Orm\UserAbsen;
 use Orm\Role;
+use Carbon\Carbon;
 
 class Absen extends MY_Controller
 {
@@ -98,6 +99,7 @@ class Absen extends MY_Controller
     public function doscan()
     {
         $notif_sukses = false;
+        $msg = '';
 
         if ($this->input->post()) {
             $validatorFactory = new ValidatorFactory;
@@ -114,13 +116,17 @@ class Absen extends MY_Controller
                     $user = $this->session->user;
 
                     $absen = AbsenOrm::where('kode_absen', $this->input->post('kode_absen'))->firstOrFail();
-                    // if($absen->expired_at){
 
-                    // }
+                    if (Carbon::now()->gt($absen->expired_at)) {
+                        //
+                        $msg = 'expired';
+                        // throw new Exception($msg);
+                    }
 
                     $user_absen = new UserAbsen();
                     $user_absen->user_id = $user->id;
                     $user_absen->absen_id = $absen->id;
+                    $user_absen->stts = empty($msg) ?? null;
                     $user_absen->save();
 
                     DB::commit();
@@ -135,7 +141,7 @@ class Absen extends MY_Controller
 
         $this->output
         ->set_content_type('application/json')
-        ->set_output(json_encode(compact('notif_sukses')));
+        ->set_output(json_encode(compact('notif_sukses', 'msg')));
     }
 
     public function lihat($id)

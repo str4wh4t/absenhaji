@@ -180,8 +180,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js"></script>
 
     <script src="{{ base_url('node_modules') }}/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
-    <script src="{{ base_url('node_modules') }}/print-js/dist/print.js"></script>
-
 
     <script type="text/javascript">
     const ROLE = "{{ $session['role']->rolename }}";

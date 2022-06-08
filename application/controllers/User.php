@@ -33,6 +33,7 @@ class User extends CI_Controller
                 'username' => 'required|alpha_dash|unique:user',
                 'email' => 'required|email|unique:user',
                 'password' => 'required|min:6',
+                'g-recaptcha-response' => 'required',
             ]);
 
             $user_input['fullname'] = $this->input->post('fullname');
@@ -46,6 +47,23 @@ class User extends CI_Controller
             } else {
                 DB::beginTransaction();
                 try {
+                    $gc = $this->input->post('g-recaptcha-response');
+                    $client = new \GuzzleHttp\Client(['base_uri' => $_ENV['APP_URL']]);
+                    $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+                        'form_params' => [
+                            'secret' => $_ENV['GCAPTCHA_V2_SECRET_KEY'],
+                            'response' => $gc
+                        ]
+                    ]);
+
+                    $body = $response->getBody();
+                    $gresponse = json_decode($body->getContents());
+
+                    if (!$gresponse->success) {
+                        $list_errors = '<li>captcha salah</li>';
+                        throw new Exception($response);
+                    }
+
                     $user = new UserOrm();
                     $user->fullname = $user_input['fullname'];
                     $user->email = $user_input['email'];

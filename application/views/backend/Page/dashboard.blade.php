@@ -17,20 +17,20 @@
   </div>
   <div class="card-body">
     <dl class="row">
-      <dt class="col-sm-3">Fullname</dt>
-      <dd class="col-sm-9">{{ $session['user']->fullname }}</dd>
+      <dt class="col-sm-4">Fullname</dt>
+      <dd class="col-sm-8">{{ $session['user']->fullname }}</dd>
 
-      <dt class="col-sm-3">Username</dt>
-      <dd class="col-sm-9">{{ $session['user']->username }}</dd>
+      <dt class="col-sm-4">Username</dt>
+      <dd class="col-sm-8">{{ $session['user']->username }}</dd>
 
-      <dt class="col-sm-3">Email</dt>
-      <dd class="col-sm-9">{{ $session['user']->email }}</dd>
-      <dt class="col-sm-3">Bidang</dt>
-      <dd class="col-sm-9">nama bidang</dd>
-      <dt class="col-sm-3">Instansi</dt>
-      <dd class="col-sm-9">nama instansi</dd>
-      <dt class="col-sm-3">Jabatan</dt>
-      <dd class="col-sm-9">nama jabatan</dd>
+      <dt class="col-sm-4">Email</dt>
+      <dd class="col-sm-8">{{ $session['user']->email }}</dd>
+      <dt class="col-sm-4">Bidang</dt>
+      <dd class="col-sm-8">nama bidang</dd>
+      <dt class="col-sm-4">Instansi</dt>
+      <dd class="col-sm-8">nama instansi</dd>
+      <dt class="col-sm-4">Jabatan</dt>
+      <dd class="col-sm-8">nama jabatan</dd>
     </dl>
   </div>
 </div>

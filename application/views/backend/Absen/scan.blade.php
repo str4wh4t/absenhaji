@@ -137,8 +137,13 @@
         // clearTimeout(label.highlightTimeout);
         // label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
         $.post('{{ site_url("backend/absen/doscan") }}', {kode_absen: result.data}, function(res){
-            if(res.notif_sukses)
-                alert('Absen berhasil');
+            if (res.notif_sukses) {
+                if (res.msg == 'expired') {
+                    alert('Absen sudah expired');
+                }else{
+                    alert('Absen berhasil');
+                }
+            }
             // alert(res.notif_sukses);
         });
     }
