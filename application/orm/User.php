@@ -23,4 +23,17 @@ class User extends Model
     {
         return $this->belongsToMany(Role::class, 'user_role');
     }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class);
+    }
+    public function instansi()
+    {
+        return $this->belongsTo(Instansi::class);
+    }
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
 }

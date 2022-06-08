@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.98.0">
-    <title>Dashboard Template · Bootstrap v5.2</title>
+    <title>Dashboard</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
 
@@ -17,6 +17,7 @@
 <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css">
     <!-- Favicons -->
 <!-- <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -100,14 +101,14 @@
   <body>
     
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">ABSENSI</a>
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">ABSENSI SATGAS</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="{{ site_url('logout') }}">Sign out</a>
+      <a class="nav-link px-3" href="{{ site_url('logout') }}">LOGOUT</a>
     </div>
   </div>
 </header>
@@ -151,10 +152,11 @@
             </a>
           </li>
           @endif
+          
           <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/user/setting') }}">
-              <i class="bi-gear"></i>
-              Setting
+              <i class="bi-person"></i>
+              Profile Satgas
             </a>
           </li>
         </ul>
@@ -175,6 +177,7 @@
     <script src="https://getbootstrap.com/docs/5.2/examples/dashboard/dashboard.js"></script>
     <script type="text/javascript" src="{{ base_url('node_modules') }}/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js"></script>
 
     <script src="{{ base_url('node_modules') }}/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
     <script src="{{ base_url('node_modules') }}/print-js/dist/print.js"></script>

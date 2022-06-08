@@ -4,8 +4,8 @@
 <div class="row">
   <div class="col-lg-8 p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
-          <h1 class="display-5 fw-bold pb-3">Aplikasi Absensi Petugas Haji</h1>
-          <p class="col-md-8 fs-4">Aplikasi untuk manajemen data absensi petugas haji di Indonesia, silahkan anda langsung dapat melakukan absensi dengan tombol dibawah</p>
+          <h1 class="display-5 fw-bold pb-3">Absensi Satgas Haji</h1>
+          <p class="col-md-8 fs-4">Aplikasi untuk manajemen data absensi satgas haji di Indonesia, silahkan anda langsung dapat melakukan absensi dengan tombol dibawah</p>
           <a class="btn btn-primary btn-lg" href="{{ site_url('backend/absen/scan') }}"><span class="bi-qr-code-scan"></span> Absen Sekarang</a>
         </div>
       </div>
@@ -13,17 +13,28 @@
           <div class="col-lg-4">
       <div class="card">
   <div class="card-header">
-    Informasi
+    User Info
   </div>
   <div class="card-body">
-    <h6 class="card-title">Fullname</h6>
-        <p class="card-text text-end">{{ $session['user']->fullname }}</p>
-    <h6 class="card-title">Username</h6>
-        <p class="card-text text-end">{{ $session['user']->username }}</p>
-    <h6 class="card-title">Email</h6>
-    <p class="card-text text-end">{{ $session['user']->email }}</p>
+    <dl class="row">
+      <dt class="col-sm-3">Fullname</dt>
+      <dd class="col-sm-9">{{ $session['user']->fullname }}</dd>
+
+      <dt class="col-sm-3">Username</dt>
+      <dd class="col-sm-9">{{ $session['user']->username }}</dd>
+
+      <dt class="col-sm-3">Email</dt>
+      <dd class="col-sm-9">{{ $session['user']->email }}</dd>
+      <dt class="col-sm-3">Bidang</dt>
+      <dd class="col-sm-9">nama bidang</dd>
+      <dt class="col-sm-3">Instansi</dt>
+      <dd class="col-sm-9">nama instansi</dd>
+      <dt class="col-sm-3">Jabatan</dt>
+      <dd class="col-sm-9">nama jabatan</dd>
+    </dl>
   </div>
 </div>
-    </div>
+    
+</div>
 </div>
 @endsection
