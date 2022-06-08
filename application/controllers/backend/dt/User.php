@@ -15,7 +15,7 @@ class User extends CI_Controller
             'role', function($q) {
                 $q->where('rolename', Role::ROLE_NON_ADMIN);
             }
-        )->select(['id', 'fullname', 'username', 'email', 'password', 'created_at']);
+        )->select(['id', 'fullname', 'username', 'email', 'password', 'created_at', 'stts']);
 
         $query = getEloquentSqlWithBindings($query);
 

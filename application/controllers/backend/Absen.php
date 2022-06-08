@@ -126,7 +126,7 @@ class Absen extends MY_Controller
                     $user_absen = new UserAbsen();
                     $user_absen->user_id = $user->id;
                     $user_absen->absen_id = $absen->id;
-                    $user_absen->stts = empty($msg) ?? null;
+                    $user_absen->stts = empty($msg) ? 1 : 0;
                     $user_absen->save();
 
                     DB::commit();

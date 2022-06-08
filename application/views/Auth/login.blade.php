@@ -11,6 +11,12 @@
     </div>
     @endif
 
+    @if(isset($flash_session['activation_success']))
+    <div class="alert alert-success" role="alert">
+        {{ $flash_session['activation_success'] }}
+    </div>
+    @endif
+
     <div class="form-floating">
       <input type="text" class="form-control" id="{{ $login_with }}" name="{{ $login_with }}" placeholder="">
       <label for="{{ $login_with }}">{{ ucwords($login_with) }}</label>

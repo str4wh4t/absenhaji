@@ -67,8 +67,9 @@ class User extends CI_Controller
                     $user = new UserOrm();
                     $user->fullname = $user_input['fullname'];
                     $user->email = $user_input['email'];
-                    $user->username = $user_input['username'];
+                    $user->username = strtolower($user_input['username']);
                     $user->password = $user_input['password'];
+                    $user->activation_code = generate_activation_code();
                     $user->save();
 
                     $user_role = new UserRole();
@@ -76,7 +77,7 @@ class User extends CI_Controller
                     $user_role->role_id = Role::where('rolename', Role::ROLE_NON_ADMIN)->first()->id;
                     $user_role->save();
 
-                    $registration_sukses = 'registrasi berhasil';
+                    $registration_sukses = 'registrasi berhasil, silahkan aktivasi';
 
                     $user_input = [
                         'fullname' => '',
@@ -96,7 +97,12 @@ class User extends CI_Controller
         render('User.registration', compact('registration_sukses','list_errors','user_input'));
     }
 
-    public function absensi()
+    public function activation($activation_code)
     {
+        $user = UserOrm::where(['activation_code' => $activation_code, 'stts' => 0, 'is_sent_activation_code' => 1])->firstOrFail();
+        $user->stts = 1;
+        $user->save();
+        $this->session->set_flashdata('activation_success', 'aktivasi berhasil, silahkan login');
+        redirect('login');
     }
 }

@@ -9,6 +9,7 @@ function render($view, array $data = [])
 
     $ci = &get_instance();
     $data['session'] = $ci->session->userdata();
+    $data['flash_session'] = $ci->session->flashdata();
 
     echo $blade->make($view, $data)->render();
 }

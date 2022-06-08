@@ -29,11 +29,19 @@ class User extends MY_Controller
         $notif_sukses = '';
         $list_errors = [];
 
+        $bidang = $this->table_refrensi(BIDANG);
+        $instansi = $this->table_refrensi(INSTANSI);
+        $jabatan = $this->table_refrensi(JABATAN);
+
         $input = [
             'fullname' => '',
             'username' => '',
             'email' => '',
             'password' => '',
+            'bidang_id' => '',
+            'instansi_id' => '',
+            'jabatan_id' => '',
+            'stts' => '',
         ];
 
         if ($this->input->post()) {
@@ -49,6 +57,9 @@ class User extends MY_Controller
             $input['email'] = $this->input->post('email');
             $input['username'] = $this->input->post('username');
             $input['password'] = $this->input->post('password');
+            $input['bidang_id'] = $this->input->post('bidang');
+            $input['instansi_id'] = $this->input->post('instansi');
+            $input['jabatan_id'] = $this->input->post('jabatan');
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -59,8 +70,14 @@ class User extends MY_Controller
                     $user = new UserOrm();
                     $user->fullname = $input['fullname'];
                     $user->email = $input['email'];
-                    $user->username = $input['username'];
+                    $user->username = strtolower($input['username']);
                     $user->password = $input['password'];
+                    $user->bidang_id = empty($input['bidang_id']) ? null : $input['bidang_id'];
+                    $user->instansi_id = empty($input['instansi_id']) ? null : $input['instansi_id'];
+                    $user->jabatan_id = empty($input['jabatan_id']) ? null : $input['jabatan_id'];
+
+                    $user->activation_code = generate_activation_code();
+
                     $user->save();
 
                     $user_role = new UserRole();
@@ -77,10 +94,14 @@ class User extends MY_Controller
                         'username' => '',
                         'email' => '',
                         'password' => '',
+                        'bidang_id' => '',
+                        'instansi_id' => '',
+                        'jabatan_id' => '',
+                        'stts' => '',
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
-                    // dd($e->getMessage());
+                    dd($e->getMessage());
                 }
             }
         }
@@ -88,7 +109,7 @@ class User extends MY_Controller
         $action = 'backend/user/tambah';
         $title = 'Tambah User';
 
-        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title'));
+        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title', 'bidang', 'instansi', 'jabatan'));
     }
 
     public function edit($id)
@@ -113,6 +134,7 @@ class User extends MY_Controller
         $list_errors = [];
 
         $input = [
+            'id' => $user->id,
             'fullname' => $user->fullname,
             'username' => $user->username,
             'email' => $user->email,
@@ -120,6 +142,7 @@ class User extends MY_Controller
             'bidang_id' => $user->bidang_id,
             'instansi_id' => $user->instansi_id,
             'jabatan_id' => $user->jabatan_id,
+            'stts' => $user->stts,
         ];
 
         if ($this->input->post()) {
@@ -160,9 +183,9 @@ class User extends MY_Controller
                     $user->email = $input['email'];
                     $user->username = $input['username'];
                     $user->password = $input['password'];
-                    $user->bidang_id = $input['bidang_id'];
-                    $user->instansi_id = $input['instansi_id'];
-                    $user->jabatan_id = $input['jabatan_id'];
+                    $user->bidang_id = empty($input['bidang_id']) ? null : $input['bidang_id'];
+                    $user->instansi_id = empty($input['instansi_id']) ? null : $input['instansi_id'];
+                    $user->jabatan_id = empty($input['jabatan_id']) ? null : $input['jabatan_id'];
                     $user->save();
 
                     DB::commit();
@@ -170,6 +193,7 @@ class User extends MY_Controller
                     $notif_sukses = 'simpan berhasil';
 
                     $input = [
+                        'id' => $user->id,
                         'fullname' => $user->fullname,
                         'username' => $user->username,
                         'email' => $user->email,
@@ -177,6 +201,7 @@ class User extends MY_Controller
                         'bidang_id' => $user->bidang_id,
                         'instansi_id' => $user->instansi_id,
                         'jabatan_id' => $user->jabatan_id,
+                        'stts' => $user->stts,
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
@@ -207,33 +232,41 @@ class User extends MY_Controller
     {
         $user = $this->session->user;
         $this->edit($user->id);
+    }
+
+    public function activation($id)
+    {
+        $user = UserOrm::findOrFail($id);
+        $user->stts = 1;
+        $user->save();
+        $this->session->set_flashdata('activation_success', 'aktivasi berhasil');
+        redirect('backend/user/edit/' . $id);
     } 
-    
+
     public function table_refrensi($pilihan)
     {
         $reff = [
-                    BIDANG =>[
-                            "data" => Bidang::all(),
-                            "field" => "bidangname"
-                    ],
-                    INSTANSI =>[
-                            "data" => Instansi::all(),
-                            "field" => "instansiname"
-                    ],
-                    JABATAN =>[
-                            "data" => Jabatan::all(),
-                            "field" => "jabatanname"
-                    ],
-                ];
+            BIDANG => [
+                'data' => Bidang::all(),
+                'field' => 'bidangname'
+            ],
+            INSTANSI => [
+                'data' => Instansi::all(),
+                'field' => 'instansiname'
+            ],
+            JABATAN => [
+                'data' => Jabatan::all(),
+                'field' => 'jabatanname'
+            ],
+        ];
 
-        $data   = $reff[$pilihan]['data'];
-        $field  = $reff[$pilihan]['field'];
-    
-        $record = array(''=> '');
-        foreach($data as $r){
+        $data = $reff[$pilihan]['data'];
+        $field = $reff[$pilihan]['field'];
+
+        $record = ['' => ''];
+        foreach ($data as $r) {
             $record[$r->id] = $r->$field;
         }
         return $record;
     }
-
 }

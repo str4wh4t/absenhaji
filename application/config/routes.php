@@ -57,3 +57,4 @@ $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
 $route['registration'] = 'user/registration';
 $route['dashboard'] = 'backend/page/dashboard';
+$route['activation/(:any)'] = 'user/activation/$1';

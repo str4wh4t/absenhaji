@@ -18,6 +18,12 @@
         {{ $notif_sukses }}
     </div>
     @endif
+
+    @if(isset($flash_session['activation_success']))
+    <div class="alert alert-success" role="alert">
+        {{ $flash_session['activation_success'] }}
+    </div>
+    @endif
   <div class="mb-3">
     <label for="fullname" class="form-label">Nama Lengkap</label>
     <input type="text" class="form-control" id="fullname" name="fullname" value="{{ $input['fullname'] }}">
@@ -28,15 +34,15 @@
   </div>
   <div class="mb-3">
     <label for="bidang" class="form-label">Bidang</label>
-    <?= form_dropdown('bidang', @$bidang, @$input['bidang_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+    <?= form_dropdown('bidang', $bidang, $input['bidang_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
   </div>
   <div class="mb-3">
     <label for="instansi" class="form-label">Instansi</label>
-    <?= form_dropdown('instansi', @$instansi, @$input['instansi_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+    <?= form_dropdown('instansi', $instansi, $input['instansi_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
   </div>
   <div class="mb-3">
     <label for="jabatan" class="form-label">Jabatan</label>
-    <?= form_dropdown('jabatan', @$jabatan, @$input['jabatan_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+    <?= form_dropdown('jabatan', $jabatan, $input['jabatan_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
   </div>
   <div class="mb-3">
     <label for="email" class="form-label">Email</label>
@@ -49,6 +55,9 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="btn btn-outline-danger" href="{{ site_url('backend/user') }}" >Kembali</a>
+  @if($input['stts'] == '0')
+  <a class="btn btn-success" href="{{ site_url('backend/user/activation/'. $input['id'] ) }}" >Aktivasi</a>
+  @endif
 </form>
 @endsection
 

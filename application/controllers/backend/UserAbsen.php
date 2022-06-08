@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use Orm\UserAbsen As UserAbsenOrm;
+use Orm\Role;
 
 class UserAbsen extends CI_Controller
 {

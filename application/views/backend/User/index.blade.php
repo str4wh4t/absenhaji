@@ -14,6 +14,7 @@
         <th scope="col">Email</th>
         <th scope="col">Password</th>
         <th scope="col">Created At</th>
+        <th scope="col">Aktif</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -59,6 +60,16 @@
           },
           {
             data: 5,
+          },
+          {
+            data: 6,
+            render: function (data, type) {
+              let aktif = 'TIDAK';
+              if(data == '1'){
+                aktif = 'YA';
+              }
+              return aktif;
+            }
           },
           {
             data: 0,
