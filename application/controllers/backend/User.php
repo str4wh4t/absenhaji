@@ -106,7 +106,7 @@ class User extends MY_Controller
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
-                    dd($e->getMessage());
+                    // dd($e->getMessage());
                 }
             }
         }
@@ -286,34 +286,34 @@ class User extends MY_Controller
         $record = ['' => ''];
         foreach ($data as $r) {
             [
-                    BIDANG =>[
-                            "data" => Bidang::all(),
-                            "field" => "bidangname"
-                    ],
-                    INSTANSI =>[
-                            "data" => Instansi::all(),
-                            "field" => "instansiname"
-                    ],
-                    JABATAN =>[
-                            "data" => Jabatan::all(),
-                            "field" => "jabatanname"
-                    ],
-                    JABATAN_STRUKTURAL =>[
-                            "data" => Jabatan_struktural::all(),
-                            "field" => "jabatanname"
-                    ],
-                ];
+                BIDANG => [
+                    'data' => Bidang::all(),
+                    'field' => 'bidangname'
+                ],
+                INSTANSI => [
+                    'data' => Instansi::all(),
+                    'field' => 'instansiname'
+                ],
+                JABATAN => [
+                    'data' => Jabatan::all(),
+                    'field' => 'jabatanname'
+                ],
+                JABATAN_STRUKTURAL => [
+                    'data' => Jabatan_struktural::all(),
+                    'field' => 'jabatanname'
+                ],
+            ];
         }
 
-        $data   = $reff[$pilihan]['data'];
-        $field  = $reff[$pilihan]['field'];
-    
-        $record = array(
-            ''=> '',
-            0=> 'Tidak Tersedia',
-        );
+        $data = $reff[$pilihan]['data'];
+        $field = $reff[$pilihan]['field'];
 
-        foreach($data as $r){
+        $record = [
+            '' => '',
+            0 => 'Tidak Tersedia',
+        ];
+
+        foreach ($data as $r) {
             $record[$r->id] = $r->$field;
         }
         return $record;
