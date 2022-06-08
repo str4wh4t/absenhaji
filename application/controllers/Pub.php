@@ -34,7 +34,7 @@ class Pub extends CI_Controller
                     . '<p>Mohon aktifasi akun anda dengan klik link dibawah ini</p>'
                     . '<p><a href="' . site_url('activation/') . $user->activation_code . '">Link Aktivasi</a></p>'
                     . ' </body></html>';
-                $sendSmtpEmail['sender'] = ['name' => 'SATGAS HAJI', 'email' => 'no-reply@kanwiljateng.app'];
+                $sendSmtpEmail['sender'] = ['name' => 'SATGAS HAJI', 'email' => 'dev.jateng@gmail.com'];
                 $sendSmtpEmail['to'] = [
                     ['email' => $user->email, 'name' => $user->fullname]
                 ];
