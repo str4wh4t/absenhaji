@@ -28,10 +28,12 @@ class User extends Model
     {
         return $this->belongsTo(Bidang::class);
     }
+
     public function instansi()
     {
         return $this->belongsTo(Instansi::class);
     }
+
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class);
