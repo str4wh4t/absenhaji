@@ -278,6 +278,10 @@ class User extends MY_Controller
                 'data' => Jabatan::all(),
                 'field' => 'jabatanname'
             ],
+            JABATAN_STRUKTURAL => [
+                'data' => Jabatan_struktural::all(),
+                'field' => 'jabatanname'
+            ],
         ];
 
         $data = $reff[$pilihan]['data'];
@@ -308,10 +312,7 @@ class User extends MY_Controller
         $data = $reff[$pilihan]['data'];
         $field = $reff[$pilihan]['field'];
 
-        $record = [
-            '' => '',
-            0 => 'Tidak Tersedia',
-        ];
+        $record = ['' => ''];
 
         foreach ($data as $r) {
             $record[$r->id] = $r->$field;
