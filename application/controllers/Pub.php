@@ -34,7 +34,7 @@ class Pub extends CI_Controller
                     . '<p>Mohon aktifasi akun anda dengan klik link dibawah ini</p>'
                     . '<p><a href="' . site_url('activation/') . $user->activation_code . '">Link Aktivasi</a></p>'
                     . ' </body></html>';
-                $sendSmtpEmail['sender'] = ['name' => 'SATGAS HAJI', 'email' => 'dev.jateng@gmail.com'];
+                $sendSmtpEmail['sender'] = ['name' => 'SATGAS HAJI 2022', 'email' => 'satgas-no-reply@kanwiljateng.app'];
                 $sendSmtpEmail['to'] = [
                     ['email' => $user->email, 'name' => $user->fullname]
                 ];
@@ -44,7 +44,7 @@ class Pub extends CI_Controller
                 $sendSmtpEmail['bcc'] = [
                     ['email' => 'idrez.mochamad@gmail.com']
                 ];
-                $sendSmtpEmail['replyTo'] = ['email' => 'dev.jateng@gmail.com', 'name' => 'SATGAS HAJI'];
+                $sendSmtpEmail['replyTo'] = ['email' => 'satgas-no-reply@kanwiljateng.app', 'name' => 'SATGAS HAJI 2022'];
                 // $sendSmtpEmail['headers'] = ['Some-Custom-Name' => 'unique-id-123456'];
                 $sendSmtpEmail['params'] = ['parameter' => '', 'subject' => ''];
 
