@@ -94,8 +94,8 @@
     
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/5.2/examples/dashboard/dashboard.css" rel="stylesheet">
-    <link href="{{ base_url('assets/node_modules') }}/jquery-datetimepicker/build/jquery.datetimepicker.min.css" rel="stylesheet">
-    <link href="{{ base_url('assets/node_modules') }}/print-js/dist/print.css" rel="stylesheet">
+    <link href="{{ base_url('node_modules') }}/jquery-datetimepicker/build/jquery.datetimepicker.min.css" rel="stylesheet">
+    <link href="{{ base_url('node_modules') }}/print-js/dist/print.css" rel="stylesheet">
   </head>
   <body>
     
