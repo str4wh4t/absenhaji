@@ -33,6 +33,10 @@
     <input type="text" class="form-control" id="username" name="username" value="{{ $input['username'] }}">
   </div>
   <div class="mb-3">
+    <label for="jabatan_struktural" class="form-label">Jabatan Struktural</label>
+    <?= form_dropdown('struktural', @$jabatan_struktural, @$input['struktural_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
+  </div>
+  <div class="mb-3">
     <label for="bidang" class="form-label">Bidang</label>
     <?= form_dropdown('bidang', $bidang, $input['bidang_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
   </div>

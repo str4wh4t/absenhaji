@@ -87,3 +87,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 defined('BIDANG')      OR define('BIDANG', 1); 
 defined('INSTANSI')      OR define('INSTANSI', 2); 
 defined('JABATAN')      OR define('JABATAN', 3); 
+defined('JABATAN_STRUKTURAL')      OR define('JABATAN_STRUKTURAL', 4); 

@@ -38,4 +38,8 @@ class User extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+    public function jabatan_struktural()
+    {
+        return $this->belongsTo(Jabatan_struktural::class);
+    }
 }
