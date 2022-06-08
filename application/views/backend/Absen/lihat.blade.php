@@ -2,7 +2,9 @@
 
 @section('css')
 <style type="text/css">
-
+#kode_absen{
+  align:center
+}
 </style>
 @endsection
 
@@ -13,7 +15,7 @@
   <div class="mb-3" id="printArea">
     <label for="kode_absen" style="width: 100%;" class="form-label">Kode Absen</label>
     <br>
-    <img id="kode_absen" src="{{ $qrcode['src'] }}" />
+      <img id="kode_absen" src="{{ $qrcode['src'] }}" />
     <br>
     <label for="expired_at" style="width: 100%;" class="form-label">Expired At</label>
     <div class="alert alert-dark" style="background: none;">{{ $absen->expired_at }}</div>

@@ -183,4 +183,10 @@ class User extends MY_Controller
         $user = $this->session->user;
         $this->edit($user->id);
     }
+
+    public function profil()
+    {
+        $user = $this->session->user;
+        $this->profil($user->id);
+    }
 }

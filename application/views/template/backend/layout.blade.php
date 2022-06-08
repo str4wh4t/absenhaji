@@ -152,9 +152,15 @@
           </li>
           @endif
           <li class="nav-item">
+            <a class="nav-link" href="{{ site_url('backend/user/profil') }}">
+              <i class="bi bi-person"></i>
+              Profile Satgas
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/user/setting') }}">
               <i class="bi-gear"></i>
-              Setting
+              Edit User
             </a>
           </li>
         </ul>
