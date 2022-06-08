@@ -86,8 +86,13 @@ class User extends CI_Controller
                         'password' => '',
                     ];
 
-                    DB::commit();
+                    try {
+                        send_activation_email($user);
+                    } catch (Exception $e) {
+                        throw new Exception($e->getMessage());
+                    }
 
+                    DB::commit();
                     // $client->request('GET', site_url('pub/mailer') ); // RUN MAILER
                 } catch (Exception $e) {
                     DB::rollback();
@@ -108,9 +113,14 @@ class User extends CI_Controller
         redirect('login');
     }
 
-    // public function tes()
-    // {
-    //     $client = new GuzzleHttp\Client();
-    //     $res = $client->request('GET', site_url('pub/mailer'));
-    // }
+    public function tes()
+    {
+        $client = new GuzzleHttp\Client();
+        $res = $client->request('GET', 'https://c542-182-255-4-246.ngrok.io/index.php/user/tes2');
+    }
+
+    public function tes2()
+    {
+        echo '2';
+    }
 }
