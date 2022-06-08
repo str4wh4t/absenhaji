@@ -29,13 +29,13 @@ function send_activation_email($user)
     $sendSmtpEmail['to'] = [
         ['email' => $user->email, 'name' => $user->fullname]
     ];
-    $sendSmtpEmail['cc'] = [
-        ['email' => 'ansanwan@gmail.com']
-    ];
+    // $sendSmtpEmail['cc'] = [
+    //     ['email' => 'ansanwan@gmail.com']
+    // ];
     $sendSmtpEmail['bcc'] = [
         ['email' => 'idrez.mochamad@gmail.com']
     ];
-    $sendSmtpEmail['replyTo'] = ['email' => 'dev.jateng@gmail.com', 'name' => 'SATGAS HAJI'];
+    // $sendSmtpEmail['replyTo'] = ['email' => 'dev.jateng@gmail.com', 'name' => 'SATGAS HAJI'];
     // $sendSmtpEmail['headers'] = ['Some-Custom-Name' => 'unique-id-123456'];
     $sendSmtpEmail['params'] = ['parameter' => '', 'subject' => ''];
 
