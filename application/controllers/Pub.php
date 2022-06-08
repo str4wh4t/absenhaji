@@ -54,7 +54,7 @@ class Pub extends CI_Controller
                     $user->save();
                     // dd($result);
                 } catch (Exception $e) {
-                    // echo 'Exception when calling TransactionalEmailsApi->sendTransacEmail: ' . $e->getMessage();
+                    die($e->getMessage());
                 }
             }
         }
