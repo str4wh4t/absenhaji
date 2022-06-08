@@ -88,7 +88,7 @@ class User extends CI_Controller
 
                     DB::commit();
 
-                    $client->request('GET', site_url('pub/mailer') ); // RUN MAILER
+                    // $client->request('GET', site_url('pub/mailer') ); // RUN MAILER
                 } catch (Exception $e) {
                     DB::rollback();
                     // dd($e->getMessage());
