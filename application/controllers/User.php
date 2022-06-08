@@ -61,7 +61,7 @@ class User extends CI_Controller
 
                     if (!$gresponse->success) {
                         $list_errors = '<li>captcha salah</li>';
-                        throw new Exception($response);
+                        throw new Exception($body);
                     }
 
                     $user = new UserOrm();
@@ -107,4 +107,10 @@ class User extends CI_Controller
         $this->session->set_flashdata('activation_success', 'aktivasi berhasil, silahkan login');
         redirect('login');
     }
+
+    // public function tes()
+    // {
+    //     $client = new GuzzleHttp\Client();
+    //     $res = $client->request('GET', site_url('pub/mailer'));
+    // }
 }
