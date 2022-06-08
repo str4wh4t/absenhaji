@@ -249,8 +249,11 @@ class User extends MY_Controller
         $data   = $reff[$pilihan]['data'];
         $field  = $reff[$pilihan]['field'];
     
-        $record = array(''=> '');
-        $record = array(0 => 'Tidak Tersedia');
+        $record = array(
+            ''=> '',
+            0=> 'Tidak Tersedia',
+        );
+
         foreach($data as $r){
             $record[$r->id] = $r->$field;
         }
