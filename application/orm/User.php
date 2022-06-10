@@ -24,6 +24,7 @@ class User extends Model
         return $this->belongsToMany(Role::class, 'user_role');
     }
 
+//// refrensi
     public function bidang()
     {
         return $this->belongsTo(Bidang::class);

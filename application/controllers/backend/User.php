@@ -221,7 +221,7 @@ class User extends MY_Controller
         }
 
         $action = 'backend/user/edit/' . $id;
-        $title = 'Edit User';
+        $title = 'Edit Satgas';
 
         render('backend.User.form', compact(
                     'notif_sukses',

@@ -10,6 +10,8 @@ class Page extends CI_Controller
 
     public function dashboard()
     {
+        // dd());
         render('backend.Page.dashboard');
+
     }
 }

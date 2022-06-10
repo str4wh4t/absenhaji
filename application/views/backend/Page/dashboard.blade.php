@@ -26,11 +26,11 @@
       <dt class="col-sm-4">Email</dt>
       <dd class="col-sm-8">{{ $session['user']->email }}</dd>
       <dt class="col-sm-4">Bidang</dt>
-      <dd class="col-sm-8">nama bidang</dd>
+      <dd class="col-sm-8">{{ $session['user']->bidang->bidangname }}</dd>
       <dt class="col-sm-4">Instansi</dt>
-      <dd class="col-sm-8">nama instansi</dd>
+      <dd class="col-sm-8">{{ $session['user']->instansi->instansiname }}</dd>
       <dt class="col-sm-4">Jabatan</dt>
-      <dd class="col-sm-8">nama jabatan</dd>
+      <dd class="col-sm-8">{{ $session['user']->jabatan->jabatanname }}</dd>
     </dl>
   </div>
 </div>
