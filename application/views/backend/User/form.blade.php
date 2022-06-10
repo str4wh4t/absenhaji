@@ -9,7 +9,6 @@
 <h2 class="title">{{ $title }}</h2>
 <hr>
 <form class="col-lg-6" method="post" action="{{ site_url($action) }}">
-  <hr>
   @if(!empty($list_errors))
     <div class="alert alert-danger fs-6" role="alert">
         <ul class="notif_error">
@@ -48,20 +47,20 @@
     <?= form_dropdown('instansi', $instansi, $input['instansi_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') ?>
   </div>
   
-  <div class="row mt-4 mb-3">
+  <div class="row mt-4 mb-0">
     <div class="col-lg-3 mb-3">
         <div class="radio-group">
             <div class="radio radio-info radio-inline">
                 <input type="radio" id="radioc" value="INT" name="set" <?= @$kelompok_jabatan == "INT" ? "checked" : null ?>>
                 <label for="radioc" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
-                    data-original-title="Data jabatan">Struktural</label>
+                    data-original-title="Data jabatan">Jabatan Struktural</label>
             </div>
             <div class="radio radio-success radio-inline">
                 <input type="radio" id="radiod" value="EXT" name="set" <?= @$kelompok_jabatan == "EXT" ? "checked" : null ?>>
                 <label for="radiod" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
-                    data-original-title="Data jabatan">Non Struktural</label>
+                    data-original-title="Data jabatan">Jabatan Non Struktural</label>
             </div>
         </div>
     </div>
@@ -72,18 +71,7 @@
     </div>
 </div>
 
-  <div class="mb-3">
-    {{-- <label for="jabatan_struktural" class="form-label">Jabatan Struktural</label> --}}
-    <?php 
-    //form_dropdown('struktural', @$jabatan_struktural, @$input['struktural_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') 
-    ?>
-  </div>
-  <div class="mb-3">
-    {{-- <label for="jabatan" class="form-label">Jabatan</label> --}}
-    <?php 
-    //form_dropdown('jabatan', $jabatan, $input['jabatan_id'] , 'class="form-select chosen" data-placeholder="- PILIH -"') 
-    ?>
-  </div>
+ 
   <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input type="text" class="form-control" id="email" name="email" value="{{ $input['email'] }}">
@@ -109,24 +97,27 @@
   });
 
   $(document).ready( function () {
+
+    radio_jabatan();
+
     $('.chosen').chosen({
         width: "100%"
     });
 
     $(document).on('click', '[name="set"]', function () {
         if($(this).val() == "EXT"){
-            select_pegawai("non_struktural");
+            select_jabatan("non_struktural");
             // alert('EXT')
           }
 
           if($(this).val() == "INT"){
-            select_pegawai("struktural");
+            select_jabatan("struktural");
             // alert('INT')
           }
        
     });
 
-    function select_pegawai(param){
+    function select_jabatan(param){
         var act;
         
         if(param == "non_struktural"){
@@ -160,8 +151,39 @@
         });
         $('#jabatan').select2('open');
         
-        
     }
+
+    function radio_jabatan(){
+      var struktural;
+      var non_struktural;
+      var jabatan_id; 
+      var jabatan_name;
+
+      struktural  = "<?= $input['struktural_id'] ?>";
+      non_struktural  = "<?= $input['jabatan_id'] ?>";
+
+      // jabatan_id  = "<?= $input['struktural_id'] ?>";
+      // jabatan_name = "<?= $input['struktural_id'] ?>";
+
+      if(non_struktural == "0" || non_struktural == "" || non_struktural == null){
+          var $option = $("<option selected></option>").val("1").text("banmaf");
+          $('#jabatan').append($option).trigger('change');
+      }
+
+      // if(jabatan_id == "0" || jabatan_id == null){
+      //     $("#jabatan").val('').trigger('change')
+      // }
+
+
+        if($('#radioc').is(':checked')) { 
+            select_jabatan("struktural");
+        }
+
+        if($('#radiod').is(':checked')) { 
+            select_jabatan("non_struktural");
+        }
+    }
+
 
   });
 </script>

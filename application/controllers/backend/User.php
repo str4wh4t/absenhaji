@@ -134,6 +134,9 @@ class User extends MY_Controller
         $jabatan = $this->table_refrensi(JABATAN);
         $jabatan_struktural = $this->table_refrensi(JABATAN_STRUKTURAL);
 
+        $jabatan_id = 1;
+        $jabatan_name = "name jabatan";
+
         // print_r($bidang);
 
         $notif_sukses = '';
@@ -232,7 +235,9 @@ class User extends MY_Controller
                     'bidang', 
                     'instansi', 
                     'jabatan',
-                    'jabatan_struktural'
+                    'jabatan_struktural',
+                    'jabatan_id',
+                    'jabatan_name'
                 ));
     }
 
