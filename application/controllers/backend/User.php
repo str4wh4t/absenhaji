@@ -286,33 +286,8 @@ class User extends MY_Controller
             JABATAN_STRUKTURAL => [
                 'data' => Jabatan_struktural::all(),
                 'field' => 'jabatanname'
-            ],
+            ]
         ];
-
-        // $data = $reff[$pilihan]['data'];
-        // $field = $reff[$pilihan]['field'];
-
-        // $record = ['' => ''];
-        // foreach ($data as $r) {
-        //     [
-        //         BIDANG => [
-        //             'data' => Bidang::all(),
-        //             'field' => 'bidangname'
-        //         ],
-        //         INSTANSI => [
-        //             'data' => Instansi::all(),
-        //             'field' => 'instansiname'
-        //         ],
-        //         JABATAN => [
-        //             'data' => Jabatan::all(),
-        //             'field' => 'jabatanname'
-        //         ],
-        //         JABATAN_STRUKTURAL => [
-        //             'data' => Jabatan_struktural::all(),
-        //             'field' => 'jabatanname'
-        //         ],
-        //     ];
-        // }
 
         $data = $reff[$pilihan]['data'];
         $field = $reff[$pilihan]['field'];
@@ -325,13 +300,13 @@ class User extends MY_Controller
         return $record;
     }
 
-    public function get_jabatan($jabatan){
+    public function get_jabatan($jabatan)
+    {
 		if (!$this->input->is_ajax_request())
 		return;
 		header('Content-Type: application/json');
 
         $ref_tb = $jabatan == "struktural" ? "ref_jabatan_struktural" : "ref_jabatan";
-        // echo $nilai > 8 ? 'Sangat Baik' : 'Baik';
 
 		$opt    = [];
 		$q      = $this->input->get('q');
