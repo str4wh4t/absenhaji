@@ -263,7 +263,7 @@ class User extends MY_Controller
         redirect('backend/user/edit/' . $id);
     } 
 
-    public function table_refrensi($pilihan)
+    private function table_refrensi($pilihan)
     {
         $reff = [
             BIDANG => [
@@ -284,30 +284,30 @@ class User extends MY_Controller
             ],
         ];
 
-        $data = $reff[$pilihan]['data'];
-        $field = $reff[$pilihan]['field'];
+        // $data = $reff[$pilihan]['data'];
+        // $field = $reff[$pilihan]['field'];
 
-        $record = ['' => ''];
-        foreach ($data as $r) {
-            [
-                BIDANG => [
-                    'data' => Bidang::all(),
-                    'field' => 'bidangname'
-                ],
-                INSTANSI => [
-                    'data' => Instansi::all(),
-                    'field' => 'instansiname'
-                ],
-                JABATAN => [
-                    'data' => Jabatan::all(),
-                    'field' => 'jabatanname'
-                ],
-                JABATAN_STRUKTURAL => [
-                    'data' => Jabatan_struktural::all(),
-                    'field' => 'jabatanname'
-                ],
-            ];
-        }
+        // $record = ['' => ''];
+        // foreach ($data as $r) {
+        //     [
+        //         BIDANG => [
+        //             'data' => Bidang::all(),
+        //             'field' => 'bidangname'
+        //         ],
+        //         INSTANSI => [
+        //             'data' => Instansi::all(),
+        //             'field' => 'instansiname'
+        //         ],
+        //         JABATAN => [
+        //             'data' => Jabatan::all(),
+        //             'field' => 'jabatanname'
+        //         ],
+        //         JABATAN_STRUKTURAL => [
+        //             'data' => Jabatan_struktural::all(),
+        //             'field' => 'jabatanname'
+        //         ],
+        //     ];
+        // }
 
         $data = $reff[$pilihan]['data'];
         $field = $reff[$pilihan]['field'];
@@ -319,4 +319,31 @@ class User extends MY_Controller
         }
         return $record;
     }
+
+    public function get_jabatan($jabatan){
+		if (!$this->input->is_ajax_request())
+		return;
+		header('Content-Type: application/json');
+
+        $ref_tb = $jabatan == "struktural" ? "ref_jabatan_struktural" : "ref_jabatan";
+        // echo $nilai > 8 ? 'Sangat Baik' : 'Baik';
+
+		$opt    = [];
+		$q      = $this->input->get('q');
+
+		$json   = $this->db->from($ref_tb)
+					->like('jabatanname', $q)
+					->order_by('jabatanname', 'ASC')
+					->limit('10')
+					->get()->result();
+
+		foreach ($json as $r) {
+			$opt[] = [
+				'id' 	=> $r->id,
+				'text' 	=> $r->jabatanname
+			];
+		}
+		
+		echo json_encode($opt);
+	}
 }
