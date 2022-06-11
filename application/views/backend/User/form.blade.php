@@ -8,7 +8,7 @@
 @section('content')
 <h2 class="title">{{ $title }}</h2>
 <hr>
-<form class="col-lg-6" method="post" action="{{ site_url($action) }}">
+<form class="col-lg-12" method="post" action="{{ site_url($action) }}">
   @if(!empty($list_errors))
     <div class="alert alert-danger fs-6" role="alert">
         <ul class="notif_error">
