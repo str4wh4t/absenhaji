@@ -2,12 +2,13 @@
 @section('content')
 <h2 class="title">Riwayat Absen</h2>
 <hr>
+@if($session['role']->rolename == \Orm\Role::ROLE_ADMIN)
 <div class="pt-3 pb-3" >
     <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <span class="bi-file-earmark-text"></span> Laporan
     </button>
-
 </div>
+@endif
 <div class="table-responsive pt-3">
   <table class="table table-border table-sm" id="user_absen_table">
     <thead>

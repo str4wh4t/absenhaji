@@ -160,7 +160,9 @@ class Absen extends MY_Controller
         render('backend.Absen.riwayat');
     }
 
-    public function cetak($date_start, $date_end){
+    public function cetak($date_start, $date_end)
+    {
+        $this->_allow_role(Role::ROLE_ADMIN);
 
         try {
             $date_start = Carbon::parse($date_start);
@@ -175,31 +177,9 @@ class Absen extends MY_Controller
         $user_list =  User::all();
         $absen_list =  AbsenOrm::all();
 
-        // $user_ =  User::first();
-        // $user_->absen()->first();
-        // dd($user_);
-
-        // dd($user_->created_at->format('Y-m-d'));
-
         $absen_tgl_list = $absen_list->groupBy('kode_absen');
 
         $period = CarbonPeriod::create($date_start, $date_end);
-
-        // echo $period->count();die; 
-        // dd($period->getDateInterval());
-
-        // Iterate over the period
-        // foreach ($period as $date) {
-        //     echo $date->format('Y-m-d') . "\n";
-        // }
-        // die();
-        
-        // $d = $this->load->view('backend/absen/cetak_absen_xls', compact(
-        //     'nama_file',
-        //     'user_list',
-        //     'absen_list',
-        //     'period'
-        // ));
 
         render('backend.Absen.cetak_absen_xls', compact(
             'nama_file',
