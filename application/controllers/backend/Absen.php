@@ -194,7 +194,14 @@ class Absen extends MY_Controller
         // }
         // die();
         
-        $d = $this->load->view('backend/absen/cetak_absen_xls', compact(
+        // $d = $this->load->view('backend/absen/cetak_absen_xls', compact(
+        //     'nama_file',
+        //     'user_list',
+        //     'absen_list',
+        //     'period'
+        // ));
+
+        render('backend.Absen.cetak_absen_xls', compact(
             'nama_file',
             'user_list',
             'absen_list',
