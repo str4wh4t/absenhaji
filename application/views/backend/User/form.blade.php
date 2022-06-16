@@ -51,13 +51,13 @@
     <div class="col-lg-3 mb-3 pt-2">
         <div class="radio-group">
             <div class="radio radio-info radio-inline">
-                <input type="radio" id="radioc" value="1" name="stts_jabatan" {{ $input['stts_jabatan'] == "1" ? "checked" : null }}>
+                <input type="radio" id="radioc" value="1" name="stts_jabatan" {{ $input['stts_jabatan'] == "2" ? "checked" : null }}>
                 <label for="radioc" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
                     data-original-title="Data jabatan">Jabatan Struktural</label>
             </div>
             <div class="radio radio-success radio-inline">
-                <input type="radio" id="radiod" value="2" name="stts_jabatan" {{ $input['stts_jabatan'] == "2" ? "checked" : null }}>
+                <input type="radio" id="radiod" value="2" name="stts_jabatan" {{ $input['stts_jabatan'] == "1" ? "checked" : null }}>
                 <label for="radiod" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
                     data-original-title="Data jabatan">Jabatan Non Struktural</label>
@@ -205,13 +205,13 @@
         $('#panel_select_jabatan').show();
         $('#jabatan').select2('destroy');
         let data
-        if($(this).val() == "1"){
+        if($(this).val() == "2"){
           // select_jabatan("struktural");
           // alert('INT')
           data =JSON.parse('{!! json_encode($select2_struktural_opt) !!}');
         }
 
-        if($(this).val() == "2"){
+        if($(this).val() == "1"){
           // select_jabatan("non_struktural");
           // alert('EXT')
           data =JSON.parse('{!! json_encode($select2_non_struktural_opt) !!}');
