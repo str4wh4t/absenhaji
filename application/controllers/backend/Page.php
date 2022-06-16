@@ -1,4 +1,7 @@
 <?php
+
+use Orm\User;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Page extends CI_Controller
@@ -45,6 +48,11 @@ class Page extends CI_Controller
         
         print_r( $sql);
         
+    }
+
+
+    public function coba(){
+
     }
 
 }

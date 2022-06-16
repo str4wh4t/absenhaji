@@ -2,9 +2,12 @@
 @section('content')
 <h2 class="title">Riwayat Absen</h2>
 <hr>
-<!-- <div class="pt-3 pb-3" >
-    <a href="{{ site_url('backend/absen/tambah') }}" class="btn btn-outline-primary"><span class="bi-plus-circle"></span> Tambah</a>
-</div> -->
+<div class="pt-3 pb-3" >
+    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <span class="bi-file-earmark-text"></span> Laporan
+    </button>
+
+</div>
 <div class="table-responsive pt-3">
   <table class="table table-border table-sm" id="user_absen_table">
     <thead>
@@ -17,6 +20,32 @@
     </thead>
   </table>
 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pilih Periode</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="mb-3">
+            <label for="tgl_awal_report" class="form-label">Tgl Awal</label>
+            <input type="text" class="form-control datetimepicker" id="tgl_awal_report">
+          </div>
+          <div class="mb-3">
+            <label for="tgl_akhir_report" class="form-label">Tgl Akhir</label>
+            <input type="text" class="form-control datetimepicker" id="tgl_akhir_report">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" id="btn_submit_laporan" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('js')
@@ -32,7 +61,20 @@
     }
   });
 
+  $(document).on('click', '#btn_submit_laporan', function(){
+      let start_date = $('#tgl_awal_report').val();
+      let end_date = $('#tgl_akhir_report').val();
+      if(!start_date.length || !end_date.length){
+        alert('Tgl tidak boleh kosong');
+        return;
+      }
+      window.location.href = "{{ site_url('backend/absen/cetak') }}/" + start_date + "/" + end_date;
+  });
+
   $(document).ready( function () {
+
+    $('.datetimepicker').datetimepicker({timepicker:false, format:'Y-m-d'});
+
     $('#user_absen_table').DataTable( {
         serverSide: true,
         ajax: {

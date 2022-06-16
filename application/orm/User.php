@@ -24,6 +24,11 @@ class User extends Model
         return $this->belongsToMany(Role::class, 'user_role');
     }
 
+    public function absen()
+    {
+        return $this->belongsToMany(Absen::class, 'user_absen');
+    }
+
 //// refrensi
     public function bidang()
     {

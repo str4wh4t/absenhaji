@@ -5,8 +5,9 @@ use Illuminate\Database\Capsule\Manager as DB;
 use Grahes\Validator\ValidatorFactory;
 use Orm\Absen AS AbsenOrm;
 use Orm\UserAbsen;
+use Orm\User;
 use Orm\Role;
-use Carbon\Carbon;
+use Carbon\{Carbon , CarbonPeriod};
 
 class Absen extends MY_Controller
 {
@@ -126,7 +127,7 @@ class Absen extends MY_Controller
                     $user_absen = new UserAbsen();
                     $user_absen->user_id = $user->id;
                     $user_absen->absen_id = $absen->id;
-                    $user_absen->stts = empty($msg) ? 1 : 0;
+                    $user_absen->stts = empty($msg) ? 1 : 0; // 1 : ONTIME ; 0 : terlambat
                     $user_absen->save();
 
                     DB::commit();
@@ -157,5 +158,47 @@ class Absen extends MY_Controller
     public function riwayat()
     {
         render('backend.Absen.riwayat');
+    }
+
+    public function cetak($date_start, $date_end){
+
+        try {
+            $date_start = Carbon::parse($date_start);
+            $date_end = Carbon::parse($date_end);
+        } catch (\Exception $e) {
+            die('invalid date');
+        }
+
+        $nama_file = 'absen_petugas_haji';
+        // $user =  User::whereHas('absen')->get();
+
+        $user_list =  User::all();
+        $absen_list =  AbsenOrm::all();
+
+        // $user_ =  User::first();
+        // $user_->absen()->first();
+        // dd($user_);
+
+        // dd($user_->created_at->format('Y-m-d'));
+
+        $absen_tgl_list = $absen_list->groupBy('kode_absen');
+
+        $period = CarbonPeriod::create($date_start, $date_end);
+
+        // echo $period->count();die; 
+        // dd($period->getDateInterval());
+
+        // Iterate over the period
+        // foreach ($period as $date) {
+        //     echo $date->format('Y-m-d') . "\n";
+        // }
+        // die();
+        
+        $d = $this->load->view('backend/absen/cetak_absen_xls', compact(
+            'nama_file',
+            'user_list',
+            'absen_list',
+            'period'
+        ));
     }
 }
