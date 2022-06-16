@@ -28,7 +28,7 @@ header("Content-Disposition: attachment; filename=". $nama_file .".xls");
         <td >{{ $user->struktural->jabatanname ?? '-' }}</td>
         @php $array_user_absen_date_checking = []; @endphp
         @foreach($period AS $date)
-            @php $found = false; $terlambat = false; @endphp
+            @php $found = false; $terlambat = false; $absen_at = ''; @endphp
             @foreach($user->absen AS $user_absen)
                 @if($date->isSameAs('Y-m-d', $user_absen->created_at))
                     @php 
@@ -44,18 +44,19 @@ header("Content-Disposition: attachment; filename=". $nama_file .".xls");
                     $array_user_absen_date_checking[$user->id][] = $date->format('Y-m-d');
                     $found = true; 
                     $terlambat = $user_absen->stts;
+                    $absen_at = $user_absen->created_at->format('H:i:s');
                     @endphp
                 @endif
             @endforeach
 
             @if($found)
                 @if($terlambat)
-                    <td >{{ 'terlambat' }}</td>
+                    <td >{{ $absen_at }}</td>
                 @else
-                    <td >{{ 'ok' }}</td>
+                    <td >{{ $absen_at }}</td>
                 @endif
             @else
-                <td >{{ '' }}</td>
+                <td >{{ '-' }}</td>
             @endif
 
         @endforeach

@@ -174,7 +174,7 @@ class Absen extends MY_Controller
         $nama_file = 'absen_petugas_haji';
         // $user =  User::whereHas('absen')->get();
 
-        $user_list =  User::all();
+        $user_list =  User::all()->sortBy(['fullname', 'bidang_id', 'instansi_id', 'jabatan_id', 'struktural_id']);
         $absen_list =  AbsenOrm::all();
 
         $absen_tgl_list = $absen_list->groupBy('kode_absen');
