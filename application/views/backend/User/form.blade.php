@@ -51,13 +51,13 @@
     <div class="col-lg-3 mb-3 pt-2">
         <div class="radio-group">
             <div class="radio radio-info radio-inline">
-                <input type="radio" id="radioc" value="1" name="stts_jabatan" {{ $input['stts_jabatan'] == "2" ? "checked" : null }}>
+                <input type="radio" id="radioc" value="2" name="stts_jabatan" {{ $input['stts_jabatan'] == "2" ? "checked" : null }}>
                 <label for="radioc" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
                     data-original-title="Data jabatan">Jabatan Struktural</label>
             </div>
             <div class="radio radio-success radio-inline">
-                <input type="radio" id="radiod" value="2" name="stts_jabatan" {{ $input['stts_jabatan'] == "1" ? "checked" : null }}>
+                <input type="radio" id="radiod" value="1" name="stts_jabatan" {{ $input['stts_jabatan'] == "1" ? "checked" : null }}>
                 <label for="radiod" class="tooltips" 
                     data-toggle="tooltip" data-placement="top" 
                     data-original-title="Data jabatan">Jabatan Non Struktural</label>
