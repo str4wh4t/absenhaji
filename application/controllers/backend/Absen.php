@@ -176,9 +176,9 @@ class Absen extends MY_Controller
 
         $user_list =  User::orderBy('bidang_id')
                             ->orderBy('instansi_id')
-                            ->orderBy('fullname')
                             ->orderBy('jabatan_id')
                             ->orderBy('struktural_id')
+                            ->orderBy('fullname')
                             ->get();
         $absen_list =  AbsenOrm::all();
 
