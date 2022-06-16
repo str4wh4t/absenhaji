@@ -168,15 +168,15 @@ class Absen extends MY_Controller
             $date_start = Carbon::parse($date_start);
             $date_end = Carbon::parse($date_end);
         } catch (\Exception $e) {
-            die('invalid date');
+            show_error('Terjadi kesalahan data');
         }
 
         $nama_file = 'absen_petugas_haji';
         // $user =  User::whereHas('absen')->get();
 
-        $user_list =  User::orderBy('fullname')
-                            ->orderBy('bidang_id')
+        $user_list =  User::orderBy('bidang_id')
                             ->orderBy('instansi_id')
+                            ->orderBy('fullname')
                             ->orderBy('jabatan_id')
                             ->orderBy('struktural_id')
                             ->get();
