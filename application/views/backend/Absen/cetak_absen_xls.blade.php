@@ -31,8 +31,12 @@ header("Content-Disposition: attachment; filename=". $nama_file .".xls");
         $found = false; $terlambat = true; $absen_at = ''; 
         @endphp
         @foreach($period AS $date)
-            @foreach($user->absen AS $user_absen)
-                @if($date->isSameAs('Y-m-d', $user_absen->created_at))
+            @foreach($user->absen AS $absen)
+                @php 
+                $array_user_absen_date_checking = []; 
+                $found = false; $terlambat = true; $absen_at = ''; 
+                @endphp
+                @if($date->isSameAs('Y-m-d', $absen->created_at->format('Y-m-d')))
                     @php 
                     if(!isset($array_user_absen_date_checking[$user->id])){
                         $array_user_absen_date_checking[$user->id] = [];
@@ -44,8 +48,9 @@ header("Content-Disposition: attachment; filename=". $nama_file .".xls");
 
                     $array_user_absen_date_checking[$user->id][] = $date->format('Y-m-d');
                     $found = true; 
-                    $terlambat = $user_absen->stts;
-                    $absen_at = $user_absen->created_at->format('H:i:s');
+                    $terlambat = $absen->userAbsen()->where('user_id', $user->id)->first()->stts;
+                    $absen_at = $absen->userAbsen()->where('user_id', $user->id)->first()->created_at->format('H:i:s');
+                    break;
                     @endphp
                 @endif
             @endforeach
@@ -59,11 +64,6 @@ header("Content-Disposition: attachment; filename=". $nama_file .".xls");
             @else
                 <td >{{ '-' }}</td>
             @endif
-
-            @php 
-            $array_user_absen_date_checking = []; 
-            $found = false; $terlambat = true; $absen_at = ''; 
-            @endphp
 
         @endforeach
     </tr>

@@ -180,6 +180,7 @@ class Absen extends MY_Controller
                             ->orderBy('struktural_id')
                             ->orderBy('fullname')
                             ->get();
+
         $absen_list =  AbsenOrm::all();
 
         $absen_tgl_list = $absen_list->groupBy('kode_absen');
