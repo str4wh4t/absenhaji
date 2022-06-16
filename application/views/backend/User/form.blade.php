@@ -190,16 +190,15 @@
     @if($input['stts_jabatan'] != 0)
       $('#panel_select_jabatan').show();
       @if($input['stts_jabatan'] == 1)
-      let data =JSON.parse('{!! json_encode($select2_struktural_opt) !!}');
+      let data =JSON.parse('{!! json_encode($select2_non_struktural_opt) !!}');
       let id = {{ $input['jabatan_id'] }};
       @elseif($input['stts_jabatan'] == 2)
-      let data =JSON.parse('{!! json_encode($select2_non_struktural_opt) !!}');
+      let data =JSON.parse('{!! json_encode($select2_struktural_opt) !!}');
       let id = {{ $input['struktural_id'] }};
       @endif
       init_select_jabatan(data);
       $("#jabatan").val(id).trigger('change');
     @endif
-
   });
 
   $(document).on('click', '[name="stts_jabatan"]', function () {
