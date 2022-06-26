@@ -69,7 +69,10 @@
         alert('Tgl tidak boleh kosong');
         return;
       }
-      window.location.href = "{{ site_url('backend/absen/cetak') }}/" + start_date + "/" + end_date;
+
+      let strWindowFeatures = "location=yes,height=570,width=800,scrollbars=yes,status=yes";
+      let url = "{{ site_url('backend/absen/cetak') }}/" + start_date + '/' + end_date;
+      let win = window.open(url, "_self", strWindowFeatures);
   });
 
   $(document).ready( function () {
@@ -113,6 +116,7 @@
           },
           
         ],
+        order: [[2, 'desc']],
     });
   });
 </script>

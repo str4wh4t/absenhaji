@@ -117,22 +117,26 @@ class Absen extends MY_Controller
                     $user = $this->session->user;
 
                     $absen = AbsenOrm::where('kode_absen', $this->input->post('kode_absen'))->firstOrFail();
+                    $expired_at = Carbon::createFromFormat('Y-m-d H:i:s',  $absen->expired_at);
 
-                    if (Carbon::now()->gt($absen->expired_at)) {
-                        //
-                        $msg = 'expired';
-                        // throw new Exception($msg);
+                    if (Carbon::now()->isSameDay($expired_at)) {
+                        if (Carbon::now()->gt($expired_at)) {
+                            //
+                            $msg = 'expired';
+                            // throw new Exception($msg);
+                        }
+                        $user_absen = new UserAbsen();
+                        $user_absen->user_id = $user->id;
+                        $user_absen->absen_id = $absen->id;
+                        $user_absen->stts = empty($msg) ? 1 : 0; // 1 : ONTIME ; 0 : terlambat
+                        $user_absen->save();
+
+                        DB::commit();
+
+                        $notif_sukses = true;
+                    } else {
+                        $msg = 'invalid';
                     }
-
-                    $user_absen = new UserAbsen();
-                    $user_absen->user_id = $user->id;
-                    $user_absen->absen_id = $absen->id;
-                    $user_absen->stts = empty($msg) ? 1 : 0; // 1 : ONTIME ; 0 : terlambat
-                    $user_absen->save();
-
-                    DB::commit();
-
-                    $notif_sukses = true;
                 } catch (Exception $e) {
                     DB::rollback();
                     // dd($e->getMessage());
@@ -160,13 +164,17 @@ class Absen extends MY_Controller
         render('backend.Absen.riwayat');
     }
 
-    public function cetak($date_start, $date_end)
+    public function cetak($date_start, $date_end, $is_html = true)
     {
         $this->_allow_role(Role::ROLE_ADMIN);
 
         try {
             $date_start = Carbon::parse($date_start);
             $date_end = Carbon::parse($date_end);
+
+            if ($date_start->gt($date_end)) {
+                throw new Exception('Tanggal awal tidak boleh mendahului');
+            }
         } catch (\Exception $e) {
             show_error('Terjadi kesalahan data');
         }
@@ -174,24 +182,59 @@ class Absen extends MY_Controller
         $nama_file = 'absen_petugas_haji';
         // $user =  User::whereHas('absen')->get();
 
-        $user_list =  User::orderBy('bidang_id')
+        $user_list = User::orderBy('bidang_id')
                             ->orderBy('instansi_id')
                             ->orderBy('jabatan_id')
                             ->orderBy('struktural_id')
                             ->orderBy('fullname')
+                            ->whereKeyNot(1) // EXCEPT ADMINISTRATOR
                             ->get();
 
-        $absen_list =  AbsenOrm::all();
+        // $abs = AbsenOrm::whereDate('created_at', Carbon::createFromFormat('Y-m-d H:i:s',  '2022-06-10 06:45:21'))->first();
 
-        $absen_tgl_list = $absen_list->groupBy('kode_absen');
+        // $absen_list = AbsenOrm::all();
+
+        // $absen_tgl_list = $absen_list->groupBy('kode_absen');
 
         $period = CarbonPeriod::create($date_start, $date_end);
 
-        render('backend.Absen.cetak_absen_xls', compact(
-            'nama_file',
-            'user_list',
-            'absen_list',
-            'period'
-        ));
+        if ($is_html) {
+            render('backend.Absen.cetak_html', compact(
+                'nama_file',
+                'user_list',
+                'period',
+                'date_start',
+                'date_end'
+            ));
+        } else {
+            render('backend.Absen.cetak_xls', compact(
+                'nama_file',
+                'user_list',
+                'period',
+                'date_start',
+                'date_end'
+            ));
+        }
+    }
+
+    public function manual($user_id, $absen_id)
+    {
+        $this->_allow_role(Role::ROLE_ADMIN);
+
+        $user_absen = UserAbsen::where(['absen_id' => $absen_id, 'user_id' => $user_id])->first();
+        if (empty($user_absen)) {
+            try {
+                $absen = AbsenOrm::findOrFail($absen_id);
+                $user_absen = new UserAbsen();
+                $user_absen->absen_id = $absen_id;
+                $user_absen->user_id = $user_id;
+                $user_absen->stts = 1;
+                $user_absen->created_at = $absen->expired_at; // DIANGGAP ABSEN PALING AKHIR
+                $user_absen->save();
+            } catch (Exception $e) {
+                show_error($e->getMessage());
+            }
+        }
+        redirect($_SERVER['HTTP_REFERER']);
     }
 }
