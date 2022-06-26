@@ -139,7 +139,7 @@ use Carbon\Carbon;
    $(document).on('click', '.aHapus', function(){
     if (confirm('yakin akan menghapus')) {
       let id = $(this).data('id');
-      $.post('{{ site_url("backend/userabsen/hapus")  }}', {'id' : id}, function(data){
+      $.post('{{ site_url("backend/userAbsen/hapus")  }}', {'id' : id}, function(data){
           if(data){
             window.location.reload();
           }

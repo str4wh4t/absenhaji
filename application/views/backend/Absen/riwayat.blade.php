@@ -54,7 +54,7 @@
   $(document).on('click', '.btnHapus', function(){
     if (confirm('yakin akan menghapus')) {
       let id = $(this).data('id');
-      $.post('{{ site_url("backend/userabsen/hapus")  }}', {'id' : id}, function(data){
+      $.post('{{ site_url("backend/userAbsen/hapus")  }}', {'id' : id}, function(data){
           if(data){
             $('#user_absen_table').DataTable().ajax.reload(null, false);
           }
@@ -104,12 +104,12 @@
               if(ROLE == 'non_admin'){
                 return '<div class="btn-group" role="group" aria-label="Basic mixed styles example">'
                           // + '<button type="button" class="btn btn-sm btn-danger btnHapus" data-id="'+ data +'" ><span class="bi-trash3"></span></button>'
-                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userabsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
+                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userAbsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
                         '</div>';
               }else{
                 return '<div class="btn-group" role="group" aria-label="Basic mixed styles example">'
                           + '<button type="button" class="btn btn-sm btn-danger btnHapus" data-id="'+ data +'" ><span class="bi-trash3"></span></button>'
-                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userabsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
+                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userAbsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
                         '</div>';
               }
             },
