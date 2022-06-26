@@ -9,7 +9,7 @@ final class AddSttsAbsen extends AbstractMigration
     protected function up(): void
     {
         $this->execute('ALTER TABLE `user_absen` 
-            ADD COLUMN `stts` INT NULL AFTER `absen_id`;');
+            ADD COLUMN `stts` INT NOT NULL DEFAULT 0 AFTER `absen_id`;');
     }
 
     protected function down(): void
