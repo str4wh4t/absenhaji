@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use Orm\UserAbsen As UserAbsenOrm;
 use Orm\Role;
 
-class UserAbsen extends CI_Controller
+class UserAbsen extends MY_Controller
 {
     public function index()
     {
@@ -13,12 +13,9 @@ class UserAbsen extends CI_Controller
 
     public function hapus()
     {
-        if (!$this->input->post()) {
-            show_404();
-        }
+        $this->_allow_role(Role::ROLE_ADMIN);
 
-        $role = $this->session->role;
-        if ($role->rolename != Role::ROLE_ADMIN) {
+        if (!$this->input->post()) {
             show_404();
         }
 
