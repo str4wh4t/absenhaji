@@ -54,7 +54,7 @@
   $(document).on('click', '.btnHapus', function(){
     if (confirm('yakin akan menghapus')) {
       let id = $(this).data('id');
-      $.post('{{ site_url("backend/userabsen/hapus")  }}', {'id' : id}, function(data){
+      $.post('{{ site_url("backend/userAbsen/hapus")  }}', {'id' : id}, function(data){
           if(data){
             $('#user_absen_table').DataTable().ajax.reload(null, false);
           }
@@ -69,7 +69,10 @@
         alert('Tgl tidak boleh kosong');
         return;
       }
-      window.location.href = "{{ site_url('backend/absen/cetak') }}/" + start_date + "/" + end_date;
+
+      let strWindowFeatures = "location=yes,height=570,width=800,scrollbars=yes,status=yes";
+      let url = "{{ site_url('backend/absen/cetak') }}/" + start_date + '/' + end_date;
+      let win = window.open(url, "_self", strWindowFeatures);
   });
 
   $(document).ready( function () {
@@ -101,18 +104,19 @@
               if(ROLE == 'non_admin'){
                 return '<div class="btn-group" role="group" aria-label="Basic mixed styles example">'
                           // + '<button type="button" class="btn btn-sm btn-danger btnHapus" data-id="'+ data +'" ><span class="bi-trash3"></span></button>'
-                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userabsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
+                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userAbsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
                         '</div>';
               }else{
                 return '<div class="btn-group" role="group" aria-label="Basic mixed styles example">'
                           + '<button type="button" class="btn btn-sm btn-danger btnHapus" data-id="'+ data +'" ><span class="bi-trash3"></span></button>'
-                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userabsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
+                          + '<a class="btn btn-sm btn-primary" href={{ site_url("backend/userAbsen/lihat/") }}'+ data +' ><span class="bi-eye"></span></a>'
                         '</div>';
               }
             },
           },
           
         ],
+        order: [[2, 'desc']],
     });
   });
 </script>

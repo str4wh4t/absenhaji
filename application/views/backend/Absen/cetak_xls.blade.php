@@ -1,6 +1,6 @@
 @php
 header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=". $nama_file .".xls");
+header("Content-Disposition: attachment; filename=". $nama_file . $date_start->format('Y-m-d') . $date_end->format('Y-m-d') .".xls");
 @endphp
 <table border="1">
     <tr>

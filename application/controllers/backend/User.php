@@ -27,12 +27,14 @@ class User extends MY_Controller
     public function tambah()
     {
         $this->_allow_role(Role::ROLE_ADMIN);
-        $notif_sukses = '';
-        $list_errors = [];
 
         $bidang = $this->_table_refrensi(BIDANG);
         $instansi = $this->_table_refrensi(INSTANSI);
         $jabatan = $this->_table_refrensi(JABATAN);
+        $jabatan_struktural = $this->_table_refrensi(JABATAN_STRUKTURAL);
+
+        $notif_sukses = '';
+        $list_errors = [];
 
         $input = [
             'fullname' => '',
@@ -44,15 +46,42 @@ class User extends MY_Controller
             'jabatan_id' => '',
             'struktural_id' => '',
             'stts' => '',
+            'stts_jabatan' => '',
         ];
 
         if ($this->input->post()) {
+            $is_jabatan = $this->input->post('stts_jabatan') == 1 ? true : false;
+            $is_struktural = $this->input->post('stts_jabatan') == 2 ? true : false;
+
+            $jabatan_rules = [
+                Rule::requiredIf($is_jabatan),
+                Rule::exists('ref_jabatan','id'),
+            ];
+
+            if ($is_struktural) {
+                $jabatan_rules = [
+                    Rule::requiredIf($is_struktural),
+                    Rule::exists('ref_jabatan_struktural','id'),
+                ];
+            }
+
             $validatorFactory = new ValidatorFactory;
+
             $validator = $validatorFactory->make($this->input->post(), [
                 'fullname' => 'required',
                 'username' => 'required|alpha_dash|unique:user',
                 'email' => 'required|email|unique:user',
                 'password' => 'required|min:6',
+                'stts_jabatan' => 'required|in:1,2',
+                'jabatan' => $jabatan_rules,
+                'bidang_id' => [
+                    'required',
+                    Rule::exists('ref_bidang','id'),
+                ],
+                'instansi_id' => [
+                    'required',
+                    Rule::exists('ref_instansi','id'),
+                ]
             ]);
 
             $input['fullname'] = $this->input->post('fullname');
@@ -61,8 +90,9 @@ class User extends MY_Controller
             $input['password'] = $this->input->post('password');
             $input['bidang_id'] = $this->input->post('bidang');
             $input['instansi_id'] = $this->input->post('instansi');
-            $input['jabatan_id'] = $this->input->post('jabatan');
-            $input['struktural_id'] = $this->input->post('struktural');
+            $input['jabatan_id'] = $is_jabatan ? $this->input->post('jabatan') : null;
+            $input['struktural_id'] = $is_struktural ? $this->input->post('jabatan') : null;
+            $input['stts_jabatan'] = $this->input->post('stts_jabatan');
 
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -79,6 +109,7 @@ class User extends MY_Controller
                     $user->instansi_id = empty($input['instansi_id']) ? null : $input['instansi_id'];
                     $user->jabatan_id = empty($input['jabatan_id']) ? null : $input['jabatan_id'];
                     $user->struktural_id = empty($input['struktural_id']) ? null : $input['struktural_id'];
+                    $user->stts_jabatan = empty($input['stts_jabatan']) ? null : $input['stts_jabatan'];
 
                     $user->activation_code = generate_activation_code();
 
@@ -103,6 +134,7 @@ class User extends MY_Controller
                         'jabatan_id' => '',
                         'struktural_id' => '',
                         'stts' => '',
+                        'stts_jabatan' => '',
                     ];
                 } catch (Exception $e) {
                     DB::rollback();
@@ -114,7 +146,39 @@ class User extends MY_Controller
         $action = 'backend/user/tambah';
         $title = 'Tambah User';
 
-        render('backend.User.form', compact('notif_sukses','list_errors','input', 'action', 'title', 'bidang', 'instansi', 'jabatan'));
+        $select2_non_struktural_opt = [];
+        if (!empty($jabatan)) {
+            foreach ($jabatan as $k => $v) {
+                $select2_non_struktural_opt[] = [
+                    'id' => $k,
+                    'text' => $v,
+                ];
+            }
+        }
+
+        $select2_struktural_opt = [];
+        if (!empty($jabatan_struktural)) {
+            foreach ($jabatan_struktural as $k => $v) {
+                $select2_struktural_opt[] = [
+                    'id' => $k,
+                    'text' => $v,
+                ];
+            }
+        }
+
+        render('backend.User.form', compact(
+                    'notif_sukses',
+                    'list_errors',
+                    'input', 
+                    'action', 
+                    'title', 
+                    'bidang', 
+                    'instansi', 
+                    'jabatan',
+                    'jabatan_struktural',
+                    'select2_struktural_opt',
+                    'select2_non_struktural_opt'
+                ));
     }
 
     public function edit($id)
@@ -134,12 +198,6 @@ class User extends MY_Controller
         $jabatan = $this->_table_refrensi(JABATAN);
         $jabatan_struktural = $this->_table_refrensi(JABATAN_STRUKTURAL);
 
-        $jabatan_id = 1;
-        $jabatan_name = "name jabatan";
-
-        $is_jabatan = $this->input->post('stts_jabatan') == 1 ? true : false;
-        $is_struktural = $this->input->post('stts_jabatan') == 2 ? true : false;
-
         $notif_sukses = '';
         $list_errors = [];
 
@@ -158,13 +216,15 @@ class User extends MY_Controller
         ];
 
         if ($this->input->post()) {
+            $is_jabatan = $this->input->post('stts_jabatan') == 1 ? true : false;
+            $is_struktural = $this->input->post('stts_jabatan') == 2 ? true : false;
 
             $jabatan_rules = [
-                    Rule::requiredIf($is_jabatan),
-                    Rule::exists('ref_jabatan','id'),
+                Rule::requiredIf($is_jabatan),
+                Rule::exists('ref_jabatan','id'),
             ];
 
-            if($is_struktural){
+            if ($is_struktural) {
                 $jabatan_rules = [
                     Rule::requiredIf($is_struktural),
                     Rule::exists('ref_jabatan_struktural','id'),
@@ -174,9 +234,6 @@ class User extends MY_Controller
             $validatorFactory = new ValidatorFactory;
             $validator = $validatorFactory->make($this->input->post(), [
                 'fullname' => 'required',
-                // 'bidang_id' => 'required',
-                // 'instansi_id' => 'required',
-                // 'jabatan_id' => 'required',
                 'username' => [
                     'required',
                     'alpha_dash',
@@ -255,8 +312,8 @@ class User extends MY_Controller
         $title = 'Edit Satgas';
 
         $select2_non_struktural_opt = [];
-        if(!empty($jabatan)){
-            foreach($jabatan as $k => $v){
+        if (!empty($jabatan)) {
+            foreach ($jabatan as $k => $v) {
                 $select2_non_struktural_opt[] = [
                     'id' => $k,
                     'text' => $v,
@@ -265,8 +322,8 @@ class User extends MY_Controller
         }
 
         $select2_struktural_opt = [];
-        if(!empty($jabatan_struktural)){
-            foreach($jabatan_struktural as $k => $v){
+        if (!empty($jabatan_struktural)) {
+            foreach ($jabatan_struktural as $k => $v) {
                 $select2_struktural_opt[] = [
                     'id' => $k,
                     'text' => $v,
@@ -284,8 +341,6 @@ class User extends MY_Controller
                     'instansi', 
                     'jabatan',
                     'jabatan_struktural',
-                    'jabatan_id',
-                    'jabatan_name',
                     'select2_struktural_opt',
                     'select2_non_struktural_opt'
                 ));
@@ -353,28 +408,29 @@ class User extends MY_Controller
 
     public function get_jabatan($jabatan)
     {
-		if (!$this->input->is_ajax_request())
-		return;
-		header('Content-Type: application/json');
+        if (!$this->input->is_ajax_request()) {
+            return;
+        }
+        header('Content-Type: application/json');
 
-        $ref_tb = $jabatan == "struktural" ? "ref_jabatan_struktural" : "ref_jabatan";
+        $ref_tb = $jabatan == 'struktural' ? 'ref_jabatan_struktural' : 'ref_jabatan';
 
-		$opt    = [];
-		$q      = $this->input->get('q');
+        $opt = [];
+        $q = $this->input->get('q');
 
-		$json   = $this->db->from($ref_tb)
+        $json = $this->db->from($ref_tb)
 					->like('jabatanname', $q)
 					->order_by('jabatanname', 'ASC')
 					->limit('10')
 					->get()->result();
 
-		foreach ($json as $r) {
-			$opt[] = [
-				'id' 	=> $r->id,
-				'text' 	=> $r->jabatanname
-			];
-		}
-		
-		echo json_encode($opt);
-	}
+        foreach ($json as $r) {
+            $opt[] = [
+                'id' => $r->id,
+                'text' => $r->jabatanname
+            ];
+        }
+
+        echo json_encode($opt);
+    }
 }
