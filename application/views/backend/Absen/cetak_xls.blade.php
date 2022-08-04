@@ -28,15 +28,21 @@ header("Content-Disposition: attachment; filename=". $nama_file . $date_start->f
         <td >{{ $user->struktural->jabatanname ?? '-' }}</td>
         @php 
         $array_user_absen_date_checking = []; 
-        $found = false; $terlambat = true; $absen_at = ''; 
+        $found = false; 
+        $terlambat = true; 
+        $absen_at = ''; 
+        $user_absen_id = null;
         @endphp
         @foreach($period AS $date)
             @foreach($user->absen AS $absen)
                 @php 
                 $array_user_absen_date_checking = []; 
-                $found = false; $terlambat = true; $absen_at = ''; 
+                $found = false; 
+                $terlambat = true; 
+                $absen_at = ''; 
+                $expired_at = Carbon::createFromFormat('Y-m-d H:i:s',  $absen->expired_at);
                 @endphp
-                @if($date->isSameAs('Y-m-d', $absen->created_at->format('Y-m-d')))
+                @if($date->isSameDay($expired_at))
                     @php 
                     if(!isset($array_user_absen_date_checking[$user->id])){
                         $array_user_absen_date_checking[$user->id] = [];
@@ -48,8 +54,10 @@ header("Content-Disposition: attachment; filename=". $nama_file . $date_start->f
 
                     $array_user_absen_date_checking[$user->id][] = $date->format('Y-m-d');
                     $found = true; 
-                    $terlambat = $absen->userAbsen()->where('user_id', $user->id)->first()->stts;
-                    $absen_at = $absen->userAbsen()->where('user_id', $user->id)->first()->created_at->format('H:i:s');
+                    $userAbsen = $absen->userAbsen()->where('user_id', $user->id)->first();
+                    $terlambat = $userAbsen->stts ? false : true;
+                    $absen_at = $userAbsen->created_at->format('H:i:s');
+                    $user_absen_id = $userAbsen->id;
                     break;
                     @endphp
                 @endif
@@ -57,12 +65,19 @@ header("Content-Disposition: attachment; filename=". $nama_file . $date_start->f
 
             @if($found)
                 @if($terlambat)
-                    <td >{{ $absen_at }}</td>
+                    <td style="background-color: #ffcccc ;" >{{ $absen_at }}</td>
                 @else
                     <td >{{ $absen_at }}</td>
                 @endif
             @else
-                <td >{{ '-' }}</td>
+                @php
+                $selected_absen = Absen::whereDate('expired_at', $date)->first();
+                @endphp
+                @if(!empty($selected_absen))
+                <td >-</td>
+                @else
+                <td >-</td>
+                @endif
             @endif
 
         @endforeach
