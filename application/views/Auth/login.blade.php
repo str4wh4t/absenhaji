@@ -33,6 +33,6 @@
     </div> -->
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <a href="{{ site_url('registration') }}" class="w-100 btn btn-lg btn-danger mt-1">Daftar</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022 - <?= date('Y') ?></p>
   </form>
 @endsection
