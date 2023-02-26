@@ -377,7 +377,7 @@ class User extends MY_Controller
     {
         $reff = [
             BIDANG => [
-                'data' => Bidang::all(),
+                'data' => Bidang::orderBy('bidangname', 'asc')->get(),
                 'field' => 'bidangname'
             ],
             INSTANSI => [
@@ -385,11 +385,11 @@ class User extends MY_Controller
                 'field' => 'instansiname'
             ],
             JABATAN => [
-                'data' => Jabatan::all(),
+                'data' => Jabatan::orderBy('jabatanname', 'asc')->get(),
                 'field' => 'jabatanname'
             ],
             JABATAN_STRUKTURAL => [
-                'data' => Jabatan_struktural::all(),
+                'data' => Jabatan_struktural::orderBy('jabatanname', 'asc')->get(),
                 'field' => 'jabatanname'
             ]
         ];
