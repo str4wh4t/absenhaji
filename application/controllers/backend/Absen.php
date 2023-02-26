@@ -183,7 +183,7 @@ class Absen extends MY_Controller
         // $user =  User::whereHas('absen')->get();
 
         $user_list = User::orderBy('bidang_id')
-                            ->orderBy('instansi_id')
+                            ->orderBy('instansiname')
                             ->orderBy('jabatan_id')
                             ->orderBy('struktural_id')
                             ->orderBy('fullname')
