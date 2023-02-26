@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-lg-8 p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
-          <h1 class="display-5 fw-bold pb-3">Absensi Absensi Panitia Penyelenggara Ibadah Haji (PPIH)</h1>
+          <h1 class="display-5 fw-bold pb-3">Absensi Panitia Penyelenggara Ibadah Haji (PPIH)</h1>
           <p class="col-md-8 fs-4">Aplikasi untuk manajemen data absensi petugas haji di Indonesia, silahkan anda langsung dapat melakukan absensi dengan tombol dibawah</p>
           <a class="btn btn-primary btn-lg" href="{{ site_url('backend/absen/scan') }}"><span class="bi-qr-code-scan"></span> Absen Sekarang</a>
         </div>
