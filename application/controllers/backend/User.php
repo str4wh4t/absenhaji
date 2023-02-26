@@ -309,7 +309,7 @@ class User extends MY_Controller
         }
 
         $action = 'backend/user/edit/' . $id;
-        $title = 'Edit Satgas';
+        $title = 'Edit PPIH';
 
         $select2_non_struktural_opt = [];
         if (!empty($jabatan)) {
