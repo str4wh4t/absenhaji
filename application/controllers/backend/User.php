@@ -381,7 +381,7 @@ class User extends MY_Controller
                 'field' => 'bidangname'
             ],
             INSTANSI => [
-                'data' => Instansi::all(),
+                'data' => Instansi::orderBy('instansiname', 'asc')->get(),
                 'field' => 'instansiname'
             ],
             JABATAN => [
