@@ -158,7 +158,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/user/setting') }}">
               <i class="bi-person"></i>
-              Profile Satgas
+              Profile PPIH
             </a>
           </li>
         </ul>
