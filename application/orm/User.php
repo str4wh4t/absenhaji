@@ -8,6 +8,7 @@ class User extends Model
     protected $table = 'user';
 
     const LOGIN_WITH = 'email';
+    const NO_ACTIVATION = false;
 
     public function userRole()
     {
@@ -29,7 +30,7 @@ class User extends Model
         return $this->belongsToMany(Absen::class, 'user_absen');
     }
 
-//// refrensi
+    //// refrensi
     public function bidang()
     {
         return $this->belongsTo(Bidang::class);
@@ -44,6 +45,7 @@ class User extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+
     public function jabatan_struktural()
     {
         return $this->belongsTo(Jabatan_struktural::class);

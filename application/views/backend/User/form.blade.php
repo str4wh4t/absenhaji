@@ -1,3 +1,6 @@
+@php
+use Orm\User;
+@endphp
 @extends('template.backend.layout')
 @section('css')
 <style type="text/css">
@@ -84,7 +87,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="btn btn-outline-danger" href="{{ site_url('backend/user') }}" >Kembali</a>
-  @if($input['stts'] == '0')
+  @if($input['stts'] == '0' && !User::NO_ACTIVATION)
   <a class="btn btn-success" href="{{ site_url('backend/user/activation/'. $input['id'] ) }}" >Aktivasi</a>
   @endif
 </form>

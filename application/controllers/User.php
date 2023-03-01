@@ -112,15 +112,4 @@ class User extends CI_Controller
         $this->session->set_flashdata('activation_success', 'aktivasi berhasil, silahkan login');
         redirect('login');
     }
-
-    public function tes()
-    {
-        $client = new GuzzleHttp\Client();
-        $res = $client->request('GET', 'https://c542-182-255-4-246.ngrok.io/index.php/user/tes2');
-    }
-
-    public function tes2()
-    {
-        echo '2';
-    }
 }
