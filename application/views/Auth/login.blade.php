@@ -3,7 +3,7 @@
 @section('content')
   <form method="post" action="{{ site_url('login') }}">
     <!-- <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-    <h1 class="h3 mb-3 fw-normal">SATGAS HAJI</h1>
+    <h1 class="h3 mb-3 fw-normal">PETUGAS HAJI</h1>
 
     @if($login_salah != '')
     <div class="alert alert-danger" role="alert">
@@ -33,6 +33,6 @@
     </div> -->
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <a href="{{ site_url('registration') }}" class="w-100 btn btn-lg btn-danger mt-1">Daftar</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022 - <?= date('Y') ?></p>
   </form>
 @endsection

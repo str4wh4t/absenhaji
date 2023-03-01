@@ -309,7 +309,7 @@ class User extends MY_Controller
         }
 
         $action = 'backend/user/edit/' . $id;
-        $title = 'Edit Satgas';
+        $title = 'Edit PPIH';
 
         $select2_non_struktural_opt = [];
         if (!empty($jabatan)) {
@@ -377,19 +377,19 @@ class User extends MY_Controller
     {
         $reff = [
             BIDANG => [
-                'data' => Bidang::all(),
+                'data' => Bidang::orderBy('bidangname', 'asc')->get(),
                 'field' => 'bidangname'
             ],
             INSTANSI => [
-                'data' => Instansi::all(),
+                'data' => Instansi::orderBy('instansiname', 'asc')->get(),
                 'field' => 'instansiname'
             ],
             JABATAN => [
-                'data' => Jabatan::all(),
+                'data' => Jabatan::orderBy('jabatanname', 'asc')->get(),
                 'field' => 'jabatanname'
             ],
             JABATAN_STRUKTURAL => [
-                'data' => Jabatan_struktural::all(),
+                'data' => Jabatan_struktural::orderBy('jabatanname', 'asc')->get(),
                 'field' => 'jabatanname'
             ]
         ];
