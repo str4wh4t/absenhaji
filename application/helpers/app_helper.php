@@ -68,10 +68,8 @@ function send_activation_email_by_kirimemail($user)
         curl_setopt($ch, CURLOPT_POST, 1);
 
         $content =
-                        '<html><body>'
-                        . '<p>Mohon aktifasi akun anda dengan klik link dibawah ini</p>'
-                        . '<p><a href="' . site_url('activation/') . $user->activation_code . '">Link Aktivasi</a></p>'
-                        . ' </body></html>';
+                    '<p>Mohon aktifasi akun anda dengan klik link dibawah ini</p>'
+                    . '<p><a href="' . site_url('activation/') . $user->activation_code . '">Link Aktivasi</a></p>';
 
         $post = [
             'from' => 'no-reply@kanwiljateng.app',

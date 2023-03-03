@@ -1,11 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
+defined('BASEPATH') or exit('No direct script access allowed');
+
+use Grahes\Validator\ValidatorFactory;
+use Illuminate\Database\Capsule\Manager as DB;
+use Orm\Role;
 use Orm\User as UserOrm;
 use Orm\UserRole;
-use Orm\Role;
-use Illuminate\Database\Capsule\Manager as DB;
-use Grahes\Validator\ValidatorFactory;
 
 class User extends CI_Controller
 {
@@ -52,14 +53,14 @@ class User extends CI_Controller
                     $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
                         'form_params' => [
                             'secret' => $_ENV['GCAPTCHA_V2_SECRET_KEY'],
-                            'response' => $gc
-                        ]
+                            'response' => $gc,
+                        ],
                     ]);
 
                     $body = $response->getBody();
                     $gresponse = json_decode($body->getContents());
 
-                    if (!$gresponse->success) {
+                    if (! $gresponse->success) {
                         $list_errors = '<li>captcha salah</li>';
                         throw new Exception($body);
                     }
@@ -87,7 +88,17 @@ class User extends CI_Controller
                     ];
 
                     try {
-                        send_activation_email($user);
+                        switch ($_ENV['EMAIL_PROVIDER']) {
+                            case 'SENDINBLUE':
+                                send_activation_email($user);
+                                break;
+                            case 'KIRIMEMAIL':
+                                send_activation_email_by_kirimemail($user);
+                                break;
+                            default:
+                                send_activation_email($user);
+                                break;
+                        }
                     } catch (Exception $e) {
                         throw new Exception($e->getMessage());
                     }
@@ -101,7 +112,7 @@ class User extends CI_Controller
             }
         }
 
-        render('User.registration', compact('registration_sukses','list_errors','user_input'));
+        render('User.registration', compact('registration_sukses', 'list_errors', 'user_input'));
     }
 
     public function activation($activation_code)
