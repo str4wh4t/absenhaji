@@ -32,7 +32,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata($userdata);
                 redirect('dashboard');
             } else {
-                $login_salah = 'user tidak ditemukan';
+                $login_salah = 'User tidak ditemukan/ tidak aktif, cek email untuk aktivasi pendaftaran';
             }
         }
 
