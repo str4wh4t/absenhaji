@@ -32,7 +32,7 @@ function send_activation_email($user)
                     . '<p>Mohon aktifasi akun anda dengan klik link dibawah ini</p>'
                     . '<p><a href="' . site_url('activation/') . $user->activation_code . '">Link Aktivasi</a></p>'
                     . ' </body></html>';
-    $sendSmtpEmail['sender'] = ['name' => 'PPIH ' . date('Y'), 'email' => 'no-reply@kanwiljateng.app'];
+    $sendSmtpEmail['sender'] = ['name' => 'PPIH ' . date('Y'), 'email' => 'noreply@kanwiljateng.app'];
     $sendSmtpEmail['to'] = [
         ['email' => $user->email, 'name' => $user->fullname],
     ];
