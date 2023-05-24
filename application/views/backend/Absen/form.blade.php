@@ -27,7 +27,7 @@
     <label for="expired_at" class="form-label">Expired At</label>
     <br>
     <label for="kode_absen" class="form-label text-danger">* Sesuaikan dengan tgl absen akan digunakan</label>
-    <input type="text" class="form-control datetimepicker" id="expired_at" name="expired_at" value="{{ $input['expired_at'] }}">
+    <input type="text" class="form-control datetimepicker" id="expired_at"  autocomplete="off" name="expired_at" value="{{ $input['expired_at'] }}">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <button type="button" id="regenerateCode" class="btn btn-success">Regenerate</button>
