@@ -94,6 +94,11 @@
       ul.registration_error{
         margin-bottom: 0;
       }
+
+      .form-floating>label {
+          width: fit-content;
+          padding: 0.75rem 0.75rem;
+      }
     </style>
 
     

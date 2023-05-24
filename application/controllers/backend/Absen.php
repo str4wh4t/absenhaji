@@ -1,13 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-use Illuminate\Database\Capsule\Manager as DB;
+defined('BASEPATH') or exit('No direct script access allowed');
+
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Grahes\Validator\ValidatorFactory;
-use Orm\Absen AS AbsenOrm;
-use Orm\UserAbsen;
-use Orm\User;
+use Illuminate\Database\Capsule\Manager as DB;
+use Orm\Absen as AbsenOrm;
 use Orm\Role;
-use Carbon\{Carbon , CarbonPeriod};
+use Orm\User;
+use Orm\UserAbsen;
 
 class Absen extends MY_Controller
 {
@@ -32,7 +34,7 @@ class Absen extends MY_Controller
             $validatorFactory = new ValidatorFactory;
             $validator = $validatorFactory->make($this->input->post(), [
                 'kode_absen' => 'required|unique:absen',
-                'expired_at' => 'required|date',
+                'expired_at' => 'required|date|after:now',
             ]);
 
             $input['kode_absen'] = $this->input->post('kode_absen');
@@ -63,13 +65,13 @@ class Absen extends MY_Controller
 
         $qrcode = qrgenerate();
 
-        render('backend.Absen.form', compact('notif_sukses','list_errors','input', 'action', 'qrcode'));
+        render('backend.Absen.form', compact('notif_sukses', 'list_errors', 'input', 'action', 'qrcode'));
     }
 
     public function generate()
     {
         $this->_allow_role(Role::ROLE_ADMIN);
-        if (!$this->input->post()) {
+        if (! $this->input->post()) {
             show_404();
         }
 
@@ -83,7 +85,7 @@ class Absen extends MY_Controller
     public function hapus()
     {
         $this->_allow_role(Role::ROLE_ADMIN);
-        if (!$this->input->post()) {
+        if (! $this->input->post()) {
             show_404();
         }
 
@@ -117,7 +119,7 @@ class Absen extends MY_Controller
                     $user = $this->session->user;
 
                     $absen = AbsenOrm::where('kode_absen', $this->input->post('kode_absen'))->firstOrFail();
-                    $expired_at = Carbon::createFromFormat('Y-m-d H:i:s',  $absen->expired_at);
+                    $expired_at = Carbon::createFromFormat('Y-m-d H:i:s', $absen->expired_at);
 
                     if (Carbon::now()->isSameDay($expired_at)) {
                         if (Carbon::now()->gt($expired_at)) {
@@ -156,7 +158,7 @@ class Absen extends MY_Controller
 
         $qrcode = qrgenerate($absen->kode_absen);
 
-        render('backend.Absen.lihat', compact('absen','qrcode'));
+        render('backend.Absen.lihat', compact('absen', 'qrcode'));
     }
 
     public function riwayat()
