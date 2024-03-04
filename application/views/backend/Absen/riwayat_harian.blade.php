@@ -53,7 +53,7 @@
   $(document).ready(function() {
     $('#dateInput').on('change', function() {
         var date = $(this).val();
-        document.location.replace('<?= base_url('backend/absen/riwayat_harian') ?>?date=' + date)
+        document.location.replace('<?= site_url('backend/absen/riwayat_harian') ?>?date=' + date)
     });
 });
 
