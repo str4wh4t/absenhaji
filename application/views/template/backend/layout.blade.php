@@ -146,13 +146,14 @@
               Riwayat Absen
             </a>
           </li>
+          @if($session['role']->rolename == 'admin')
           <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/absen/riwayat_harian') }}">
                <i class="bi-clock-history"></i>
               Riwayat Absen Harian
             </a>
           </li>
-          @if($session['role']->rolename == 'admin')
+          
           <li class="nav-item">
             <a class="nav-link" href="{{ site_url('backend/user') }}">
                <i class="bi-people"></i>
