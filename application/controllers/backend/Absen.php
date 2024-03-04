@@ -11,6 +11,8 @@ use Orm\Role;
 use Orm\User;
 use Orm\UserAbsen;
 
+use function PHPUnit\Framework\isNull;
+
 class Absen extends MY_Controller
 {
     public function index()
@@ -164,6 +166,27 @@ class Absen extends MY_Controller
     public function riwayat()
     {
         render('backend.Absen.riwayat');
+    }
+    public function riwayat_harian()
+    {
+        // dd($tgl);
+        $tgl = ($this->input->get('date'));
+        $data_absen = false;
+        $field_names = false;
+
+        if($tgl){
+            $data  = $this->db->query("CALL report_harian('$tgl');");
+            $data_absen = $data->result();
+            $data_field = $data->field_data();
+            
+            $field_names = array();
+            foreach ($data_field as $field) {
+                $field_names[] = $field->name;
+            }
+        }
+       
+    
+        render('backend.Absen.riwayat_harian', compact('tgl', 'data_absen', 'field_names'));
     }
 
     public function cetak($date_start, $date_end, $is_html = true)

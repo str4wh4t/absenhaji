@@ -40,4 +40,21 @@ class Absen extends CI_Controller
 
         echo $dt->generate();
     }
+
+    public function riwayat_harian()
+    {
+        $role = $this->session->role;
+        if ($role->rolename == Role::ROLE_ADMIN) {
+            $query = UserAbsen::select(['user_absen.id', 'user.fullname', 'user.email',  'user_absen.created_at'])
+            ->join('user','user.id', '=', 'user_absen.user_id');
+        } else {
+        }
+        $query = $this->db->query("CALL report_harian('2024-03-03')");
+        $dt = DtFactory::dt();
+
+        // $query = getEloquentSqlWithBindings($query);
+        $dt->query($query);
+
+        echo $dt->generate();
+    }
 }
